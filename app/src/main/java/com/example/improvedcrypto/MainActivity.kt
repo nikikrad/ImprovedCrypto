@@ -2,6 +2,7 @@ package com.example.improvedcrypto
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -26,5 +27,11 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)
 
+    }
+    fun openFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.navHostFragmentContainer.id, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

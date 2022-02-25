@@ -11,7 +11,8 @@ import com.example.improvedcrypto.R
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
 
 class MainAdapter(
-    private val coinList: List<CoinResponse>
+    private val coinList: List<CoinResponse>,
+    private val clickListener: (CoinResponse) -> Unit
 ): RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -20,7 +21,7 @@ class MainAdapter(
     ): MainViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.item_coin, parent, false)
-        return MainViewHolder(view)
+        return MainViewHolder(view, clickListener)
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
@@ -30,7 +31,8 @@ class MainAdapter(
     override fun getItemCount(): Int = coinList.size
 
     class MainViewHolder(
-        itemView: View
+        itemView: View,
+        private val clickListener: (CoinResponse) -> Unit
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val name: TextView = itemView.findViewById(R.id.tv_Name)
@@ -47,6 +49,10 @@ class MainAdapter(
                 .load(item.image)
                 .placeholder(R.drawable.ic_no_image)
                 .into(avatar)
+
+            itemView.setOnClickListener {
+                clickListener(item)
+            }
         }
     }
 

@@ -1,11 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black"/>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/v_Main"
+        android:layout_width="320dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rectangle_rounded"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/v_Secondary"
+        android:layout_width="320dp"
+        android:layout_height="400dp"
+        app:layout_constraintTop_toBottomOf="@+id/v_Main"
+        app:layout_constraintStart_toStartOf="@+id/v_Main"
+        app:layout_constraintEnd_toEndOf="@+id/v_Main"
+        android:background="@drawable/rectangle_rounded"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:hint="Bitcoin"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/v_Main"
+        app:layout_constraintStart_toEndOf="@+id/iv_Avatar"
+        app:layout_constraintTop_toTopOf="@+id/v_Main"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="70dp"/>
+
+    <ImageView
+        android:id="@+id/iv_Avatar"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        app:layout_constraintBottom_toBottomOf="@+id/v_Main"
+        app:layout_constraintEnd_toEndOf="@+id/v_Main"
+        app:layout_constraintStart_toStartOf="@+id/v_Main"
+        app:layout_constraintTop_toTopOf="@+id/v_Main"
+        android:layout_marginEnd="150dp"/>
+
+    <TextView
+        android:id="@+id/tv_StaticBinance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#595959"
+        android:text="Binance USD"
+        app:layout_constraintStart_toStartOf="@+id/tv_Name"
+        app:layout_constraintEnd_toEndOf="@+id/tv_Name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Name"/>
+
+    <TextView
+        android:id="@+id/tv_StaticPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_StaticBinance"
+        app:layout_constraintStart_toStartOf="@+id/tv_StaticBinance"
+        android:text="Price: "
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_Price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/tv_StaticPrice"
+        app:layout_constraintTop_toBottomOf="@+id/tv_StaticBinance"/>
+
+    <TextView
+        android:id="@+id/tv_Change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="Price change:"
+        app:layout_constraintTop_toBottomOf="@+id/tv_StaticPrice"
+        app:layout_constraintStart_toStartOf="@+id/tv_StaticPrice"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_ChangePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Change"
+        app:layout_constraintStart_toStartOf="@+id/tv_Change"/>
+
+    <TextView
+        android:id="@+id/tv_StaticDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/v_Secondary"
+        app:layout_constraintEnd_toEndOf="@+id/v_Secondary"
+        app:layout_constraintStart_toStartOf="@+id/v_Secondary"
+        android:layout_marginTop="10dp"
+        android:text="DESCRIPTION"
+        android:textColor="@color/black"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/tv_Description"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_StaticDescription"
+        app:layout_constraintStart_toStartOf="@+id/v_Secondary"
+        android:layout_marginStart="15dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
