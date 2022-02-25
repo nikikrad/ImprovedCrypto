@@ -8,16 +8,20 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.improvedcrypto.files.main.MainFragment"
-        android:label="MainFragment"
+        android:label="Cryptocurrencies"
         tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_mainFragment_to_favoriteFragment2"
+            android:id="@+id/action_mainFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.improvedcrypto.files.favorite.FavoriteFragment"
-        android:label="FavoriteFragment"
-        tools:layout="@layout/fragment_favorite"/>
+        android:label="Favorite Coins"
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/action_favoriteFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>
