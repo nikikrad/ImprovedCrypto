@@ -18,7 +18,7 @@ class DescriptionCoinFragment : Fragment() {
         super.onCreate(savedInstanceState)
         descriotionCoinViewModel = ViewModelProvider(this)[DescriptionCoinViewModel::class.java]
         arguments?.getString("ID")?.let { descriotionCoinViewModel.getCoinId(it) }
-
+        descriotionCoinViewModel.getDescriptionResponse()
     }
 
     override fun onCreateView(
@@ -30,7 +30,7 @@ class DescriptionCoinFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        val id = arguments?.getString("ID")
+
     }
 
     override fun onDestroy() {
