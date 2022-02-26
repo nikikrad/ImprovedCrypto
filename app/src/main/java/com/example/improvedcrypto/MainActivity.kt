@@ -28,10 +28,10 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
 
     }
-    fun openFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(binding.navHostFragmentContainer.id, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
+//    fun openFragment(fragment: Fragment) {
+//        supportFragmentManager.beginTransaction()
+//            .replace(binding.navHostFragmentContainer.id, fragment)
+////            .addToBackStack(null)
+//            .commit()
+//    }
 }

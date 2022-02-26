@@ -5,15 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
+import com.example.improvedcrypto.files.repository.TemporaryId
 
 class MainAdapter(
-    private val coinList: List<CoinResponse>,
-    private val clickListener: (CoinResponse) -> Unit
-): RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+    private val coinList: List<CoinResponse>
+) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -21,7 +24,7 @@ class MainAdapter(
     ): MainViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.item_coin, parent, false)
-        return MainViewHolder(view, clickListener)
+        return MainViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
@@ -31,10 +34,13 @@ class MainAdapter(
     override fun getItemCount(): Int = coinList.size
 
     class MainViewHolder(
-        itemView: View,
-        private val clickListener: (CoinResponse) -> Unit
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
+//        private val mainFragment = MainFragment()
+
+        //        var idRepository: IdRepository = IdRepository()
+        var temporaryId = TemporaryId()
         private val name: TextView = itemView.findViewById(R.id.tv_Name)
         private val avatar: ImageView = itemView.findViewById((R.id.iv_Avatar))
         private val symbol: TextView = itemView.findViewById(R.id.tv_Symbol)
@@ -51,7 +57,9 @@ class MainAdapter(
                 .into(avatar)
 
             itemView.setOnClickListener {
-                clickListener(item)
+                temporaryId.id = item.id
+                findNavController(itemView).navigate(R.id.action_mainFragment_to_descriptionCoinFragment)
+
             }
         }
     }

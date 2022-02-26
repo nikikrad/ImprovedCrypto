@@ -7,15 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.improvedcrypto.MainActivity
+import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentMainBinding
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
-import com.example.improvedcrypto.files.main.description.DescriptionCoinFragment
 
 class MainFragment: Fragment() {
 
-    lateinit var itemCoin: CoinResponse
     lateinit var binding: FragmentMainBinding
     lateinit var mainViewModel: MainViewModel
     var responseBody: MutableList<CoinResponse> = emptyList<CoinResponse>().toMutableList()
@@ -43,17 +42,19 @@ class MainFragment: Fragment() {
             }
         })
 
-        val Adapter = MainAdapter(responseBody, { description -> itemClickListener(description)})
+        val Adapter = MainAdapter(responseBody)
         binding.rvCoins.layoutManager =
             LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
         binding.rvCoins.adapter = Adapter
 
     }
 
-    private fun itemClickListener(crypto: CoinResponse) {
-        itemCoin = crypto
-        (activity as MainActivity).openFragment(DescriptionCoinFragment(itemCoin))
+    fun itemClickListener() {
+        view?.post {
+            findNavController().navigate(R.id.action_mainFragment_to_descriptionCoinFragment)
+        }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
