@@ -26,10 +26,14 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.improvedcrypto.files.favorite.FavoriteFragment"
         android:label="Favorite Coins"
-        tools:layout="@layout/fragment_favorite"/>
+        tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/descriptionCoinFragment"
         android:name="com.example.improvedcrypto.files.main.description.DescriptionCoinFragment"
         android:label="DescriptionCoinFragment"
-        tools:layout="@layout/fragment_description"/>
+        tools:layout="@layout/fragment_description">
+        <argument
+            android:name="ID"/>
+    </fragment>
+
 </navigation>

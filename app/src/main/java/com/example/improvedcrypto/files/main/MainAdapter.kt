@@ -1,5 +1,6 @@
 package com.example.improvedcrypto.files.main
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
-import com.example.improvedcrypto.files.repository.TemporaryId
 
 class MainAdapter(
     private val coinList: List<CoinResponse>
@@ -37,14 +37,11 @@ class MainAdapter(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
-//        private val mainFragment = MainFragment()
-
-        //        var idRepository: IdRepository = IdRepository()
-        var temporaryId = TemporaryId()
         private val name: TextView = itemView.findViewById(R.id.tv_Name)
         private val avatar: ImageView = itemView.findViewById((R.id.iv_Avatar))
         private val symbol: TextView = itemView.findViewById(R.id.tv_Symbol)
         private val price: TextView = itemView.findViewById(R.id.tv_Price)
+        private val bundle = Bundle()
 
         fun bind(item: CoinResponse) {
             name.text = item.name
@@ -57,8 +54,8 @@ class MainAdapter(
                 .into(avatar)
 
             itemView.setOnClickListener {
-                temporaryId.id = item.id
-                findNavController(itemView).navigate(R.id.action_mainFragment_to_descriptionCoinFragment)
+                bundle.putString("ID", item.id)
+                findNavController(itemView).navigate(R.id.action_mainFragment_to_descriptionCoinFragment, bundle)
 
             }
         }

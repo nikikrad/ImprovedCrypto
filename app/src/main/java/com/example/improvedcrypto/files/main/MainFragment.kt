@@ -49,11 +49,11 @@ class MainFragment: Fragment() {
 
     }
 
-    fun itemClickListener() {
-        view?.post {
-            findNavController().navigate(R.id.action_mainFragment_to_descriptionCoinFragment)
-        }
-    }
+//    fun itemClickListener() {
+//        view?.post {
+//            findNavController().navigate(R.id.action_mainFragment_to_descriptionCoinFragment)
+//        }
+//    }
 
 
     override fun onDestroy() {

@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.improvedcrypto.databinding.FragmentDescriptionBinding
-import com.example.improvedcrypto.files.repository.TemporaryId
 
-class DescriptionCoinFragment: Fragment() {
+class DescriptionCoinFragment : Fragment() {
 
     lateinit var binding: FragmentDescriptionBinding
-    var temporaryId = TemporaryId()
+    lateinit var descriotionCoinViewModel: DescriptionCoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        descriotionCoinViewModel = ViewModelProvider(this)[DescriptionCoinViewModel::class.java]
+        arguments?.getString("ID")?.let { descriotionCoinViewModel.getCoinId(it) }
 
     }
 
@@ -28,9 +30,7 @@ class DescriptionCoinFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        Log.e("IDISHNIK", temporaryId.id)
-
+//        val id = arguments?.getString("ID")
     }
 
     override fun onDestroy() {
