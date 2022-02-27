@@ -46,6 +46,7 @@ class MainFragment: Fragment() {
         binding.rvCoins.layoutManager =
             LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
         binding.rvCoins.adapter = Adapter
+        responseBody.clear()
 
     }
 
