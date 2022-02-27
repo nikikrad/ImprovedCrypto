@@ -1,7 +1,7 @@
 package com.example.improvedcrypto.files.api
 
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
-import com.example.improvedcrypto.files.main.description.dataclass.DescriptionResponse
+import com.example.improvedcrypto.files.main.description.dataclass.ResponseDescription
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,5 +14,5 @@ interface ApiService {
     @GET("coins/{id}")
     suspend fun getDescription(
         @Path("id") id: String
-    ): Response<List<DescriptionResponse>>
+    ): Response<ResponseDescription>
 }

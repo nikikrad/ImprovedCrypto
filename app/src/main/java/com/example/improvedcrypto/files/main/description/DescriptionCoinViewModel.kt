@@ -5,21 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.improvedcrypto.files.api.ApiService
 import com.example.improvedcrypto.files.api.instance.RetrofitInstance
-import com.example.improvedcrypto.files.main.description.dataclass.DescriptionResponse
+import com.example.improvedcrypto.files.main.description.dataclass.ResponseDescription
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class DescriptionCoinViewModel: ViewModel() {
+class DescriptionCoinViewModel : ViewModel() {
 
-    private lateinit var id: String
-    var liveData: MutableLiveData<DescriptionResponse> = MutableLiveData()
-    lateinit var infoCoin: DescriptionResponse
+    var liveData: MutableLiveData<ResponseDescription> = MutableLiveData()
 
-    fun getCoinId(id: String){
-        this.id = id
-    }
-
-    fun getDescriptionResponse(){
+    fun getDescriptionResponse(id: String) {
 
         val retrofit = RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
 
@@ -27,10 +21,21 @@ class DescriptionCoinViewModel: ViewModel() {
             runBlocking {
                 val getDescription = retrofit.getDescription(id)
                 val bodyDescription = getDescription.body()
-                val getGecon = retrofit.getCrypto()
-                val bodyGecon = getGecon.body()
-//                infoCoin.id =
+
+                if (bodyDescription != null) {
+                    liveData.postValue(
+                        ResponseDescription(
+                            bodyDescription.id,
+                            bodyDescription.symbol,
+                            bodyDescription.name,
+                            bodyDescription.image,
+                            bodyDescription.description,
+                            bodyDescription.marketData
+                        )
+                    )
+                }
             }
+
         }
 
     }
