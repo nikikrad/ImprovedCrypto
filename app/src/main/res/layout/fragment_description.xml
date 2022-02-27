@@ -29,15 +29,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/inconsolata_bold"
         android:hint="Bitcoin"
         android:textColor="@color/black"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/v_Main"
-        app:layout_constraintStart_toEndOf="@+id/iv_Avatar"
-        app:layout_constraintTop_toTopOf="@+id/v_Main"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="70dp"
-        android:fontFamily="@font/inconsolata_bold"/>
+        app:layout_constraintStart_toStartOf="@+id/v_Main"
+        app:layout_constraintTop_toTopOf="@+id/v_Main" />
 
     <ImageView
         android:id="@+id/iv_Avatar"
@@ -52,12 +51,13 @@
         android:id="@+id/tv_Symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#595959"
+        android:fontFamily="@font/inconsolata_regular"
         android:hint="Binance USD"
-        app:layout_constraintStart_toStartOf="@+id/tv_Name"
-        app:layout_constraintEnd_toEndOf="@+id/tv_Name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_Name"
-        android:fontFamily="@font/inconsolata_regular"/>
+        android:textColor="#595959"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_Avatar"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Name" />
 
     <TextView
         android:id="@+id/tv_StaticPrice"
@@ -66,7 +66,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily="@font/inconsolata_regular"
         android:text="Price: "
-        app:layout_constraintStart_toStartOf="@+id/tv_Name"
+        app:layout_constraintStart_toStartOf="@+id/tv_Symbol"
         app:layout_constraintTop_toBottomOf="@+id/tv_Symbol" />
 
     <TextView
@@ -74,6 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:hint="999999"
         android:fontFamily="@font/inconsolata_regular"
         app:layout_constraintStart_toEndOf="@+id/tv_StaticPrice"
         app:layout_constraintTop_toBottomOf="@+id/tv_Symbol"/>
@@ -83,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="10sp"
-        android:text="Price change:"
+        android:text="Price change: "
         app:layout_constraintTop_toBottomOf="@+id/tv_StaticPrice"
         app:layout_constraintStart_toStartOf="@+id/tv_StaticPrice"
         android:layout_marginTop="5dp"
@@ -94,6 +95,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:textSize="10sp"
+        android:hint="999999999"
         android:fontFamily="@font/inconsolata_regular"
         app:layout_constraintTop_toBottomOf="@+id/tv_Price"
         app:layout_constraintStart_toEndOf="@+id/tv_Change"/>
@@ -111,13 +114,16 @@
         android:textSize="20sp"
         android:fontFamily="@font/inconsolata_bold"/>
 
-    <TextView
-        android:id="@+id/tv_Description"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_Description"
         android:layout_width="285dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_StaticDescription"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/v_Secondary"
+        app:layout_constraintEnd_toEndOf="@+id/v_Secondary"
         app:layout_constraintStart_toStartOf="@+id/v_Secondary"
-        android:layout_marginStart="15dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_StaticDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
