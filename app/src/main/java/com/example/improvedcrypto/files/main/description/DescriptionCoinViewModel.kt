@@ -39,6 +39,10 @@ class DescriptionCoinViewModel : ViewModel() {
         }
 
     }
+//
+//    fun getTextColor(price: Float): String{
+//        if (price > 0 ) return
+//    }
 
     override fun onCleared() {
         super.onCleared()

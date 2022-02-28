@@ -1,5 +1,6 @@
 package com.example.improvedcrypto.files.main.description
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -46,8 +47,12 @@ class DescriptionCoinFragment : Fragment() {
             binding.tvName.setText(it.name)
             binding.tvSymbol.setText(it.symbol)
             binding.tvChangePrice.setText(it.marketData.changePrice.toString())
-            binding.tvPrice.setText(it.marketData.currentPrice.usd.toString())
-//            binding.tvDescription.setText(it.description.en)
+            var resource: Resources = resources
+            var textRedColor = resource.getColor(R.color.red, null)
+            var textGreenColor = resource.getColor(R.color.green, null)
+            if(it.marketData.changePrice > 0) binding.tvChangePrice.setTextColor(textGreenColor)
+            else binding.tvChangePrice.setTextColor(textRedColor)
+            binding.tvPrice.setText(it.marketData.currentPrice.usd.toString() + " $")
             val Adapter = DescriptionCoinAdapter(it.description.en)
             binding.rvDescription.layoutManager =
                 LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)

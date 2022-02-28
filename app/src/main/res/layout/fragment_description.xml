@@ -79,6 +79,7 @@
         app:layout_constraintStart_toEndOf="@+id/tv_StaticPrice"
         app:layout_constraintTop_toBottomOf="@+id/tv_Symbol"/>
 
+
     <TextView
         android:id="@+id/tv_Change"
         android:layout_width="wrap_content"
