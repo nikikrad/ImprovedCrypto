@@ -1,5 +1,6 @@
 package com.example.improvedcrypto.files.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentMainBinding
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
 
-class MainFragment: Fragment() {
+class MainFragment : Fragment() {
 
     lateinit var binding: FragmentMainBinding
     lateinit var mainViewModel: MainViewModel
@@ -23,7 +24,6 @@ class MainFragment: Fragment() {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         mainViewModel.getResponse()
-
     }
 
     override fun onCreateView(
@@ -35,6 +35,7 @@ class MainFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
 
         mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
             it.forEach {

@@ -46,7 +46,7 @@ class DescriptionCoinFragment : Fragment() {
 
             binding.tvName.setText(it.name)
             binding.tvSymbol.setText(it.symbol)
-            binding.tvChangePrice.setText(it.marketData.changePrice.toString())
+            binding.tvChangePrice.setText(it.marketData.changePrice.toString() + " %")
             var resource: Resources = resources
             var textRedColor = resource.getColor(R.color.red, null)
             var textGreenColor = resource.getColor(R.color.green, null)
