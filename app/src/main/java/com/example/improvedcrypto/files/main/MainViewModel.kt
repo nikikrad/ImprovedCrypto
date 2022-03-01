@@ -1,10 +1,12 @@
 package com.example.improvedcrypto.files.main
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.improvedcrypto.files.api.ApiService
 import com.example.improvedcrypto.files.api.instance.RetrofitInstance
+import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -25,6 +27,20 @@ class MainViewModel: ViewModel() {
             }
         }
     }
+
+    fun getData(context: Context){
+        CoinDatabase.getDatabase(context)
+    }
+
+    fun proccesingData(database: CoinDatabase){
+
+    }
+
+//    lateinit var database: CoinDatabase()
+//
+//    fun getDatabase(getDatabase: database): CoinDatabase{
+//
+//    }
 
     override fun onCleared() {
         super.onCleared()
