@@ -1,35 +1,25 @@
 package com.example.improvedcrypto.files.data
 
 import android.content.Context
-import android.provider.CalendarContract
 import androidx.room.Database
-import androidx.room.Entity
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Coin::class], version = 1, exportSchema = false)
-abstract class CoinDatabase: RoomDatabase() {
+@Database(entities = [Coin::class], version = 1)
+abstract class CoinDatabase : RoomDatabase() {
 
     abstract fun CoinDao(): CoinDao
 
-    companion object{
-        @Volatile
-        private var INSTANCE: CoinDatabase? = null
+    companion object {
 
-        fun getDatabase(context: Context): CoinDatabase{
-            val tempInstance = INSTANCE
-            if(tempInstance != null) return tempInstance
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    CoinDatabase::class.java,
-                    "coin_database"
-                ).build()
-                INSTANCE = instance
-                return instance
-            }
+        private var database: CoinDatabase? = null
 
+        @Synchronized
+        fun getInstance(context: Context): CoinDatabase {
+            return if (database == null) {
+                database = Room.databaseBuilder(context, CoinDatabase::class.java, "db").build()
+                database as CoinDatabase
+            }else database as CoinDatabase
         }
     }
-
 }

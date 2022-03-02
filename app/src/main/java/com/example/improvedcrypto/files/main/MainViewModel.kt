@@ -28,13 +28,13 @@ class MainViewModel: ViewModel() {
         }
     }
 
-    fun getData(context: Context){
-        CoinDatabase.getDatabase(context)
-    }
-
-    fun proccesingData(database: CoinDatabase){
-
-    }
+//    fun getData(context: Context){
+//        CoinDatabase.getDatabase(context)
+//    }
+//
+//    fun proccesingData(database: CoinDatabase){
+//
+//    }
 
 //    lateinit var database: CoinDatabase()
 //
