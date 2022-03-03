@@ -11,19 +11,19 @@ import kotlinx.coroutines.launch
 
 class FavoriteViewModel: ViewModel() {
 
-    private val readAllData: LiveData<List<Coin>>
-    private val repository: CoinRepository
+//    private val readAllData: LiveData<List<Coin>>
+//    private val repository: CoinRepository
+//
+//    init{
+//        val coinDao = CoinDatabase.getDatabase().coinDao()
+//        repository = CoinRepository(coinDao)
+//        readAllData = repository.readAllData
+//    }
 
-    init{
-        val coinDao = CoinDatabase.getDatabase().coinDao()
-        repository = CoinRepository(coinDao)
-        readAllData = repository.readAllData
-    }
-
-    fun addCoin(coin: Coin){
-        viewModelScope.launch(Dispatchers.IO){
-         repository.addCoin(coin)
-        }
-    }
+//    fun addCoin(coin: Coin){
+//        viewModelScope.launch(Dispatchers.IO){
+//         repository.addCoin(coin)
+//        }
+//    }
 
 }
