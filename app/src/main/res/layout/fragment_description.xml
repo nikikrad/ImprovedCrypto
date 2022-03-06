@@ -127,5 +127,19 @@
         app:layout_constraintStart_toStartOf="@+id/v_Secondary"
         app:layout_constraintTop_toBottomOf="@+id/tv_StaticDescription" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_AddToDataBase"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:background="@drawable/rectangle_rounded"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_Secondary"
+        android:fontFamily="@font/inconsolata_bold"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:text="Add"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

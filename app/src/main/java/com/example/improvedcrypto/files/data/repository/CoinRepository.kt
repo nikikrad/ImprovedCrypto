@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import com.example.improvedcrypto.files.data.Coin
 import com.example.improvedcrypto.files.data.CoinDao
 
-interface CoinRepository{
+class CoinRepository(private val coinDao: CoinDao){
 
-    val readAllData: LiveData<List<Coin>>
+    val readAllData: LiveData<List<Coin>>  = coinDao.readAllData()
 
-    suspend fun insertCoin(coin: Coin, onSuccess:() -> Unit)
-    suspend fun delete(coin: Coin, onSuccess:() -> Unit)
+    suspend fun addCoin(coin: Coin){
+        coinDao.addCoin(coin)
+    }
+//    suspend fun delete(coin: Coin, onSuccess:() -> Unit)
 }
