@@ -6,22 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Database
 import com.example.improvedcrypto.databinding.FragmentFavoriteBinding
-import com.example.improvedcrypto.files.data.Coin
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 import com.example.improvedcrypto.files.data.repository.CoinRepository
-import com.example.improvedcrypto.files.main.description.DescriptionCoinAdapter
-import com.example.improvedcrypto.files.main.description.DescriptionCoinViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 
 class FavoriteFragment : Fragment() {
@@ -29,16 +22,12 @@ class FavoriteFragment : Fragment() {
     lateinit var binding: FragmentFavoriteBinding
     lateinit var favoriteViewModel: FavoriteViewModel
 
-    //    lateinit var readAllData: List<Coin>
-
     var coinList:  MutableList<DatabaseParameters> = emptyList<DatabaseParameters>().toMutableList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         favoriteViewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
-//        arguments?.getString("ID")?.let { favoriteViewModel.getDescriptionResponse(it) }
     }
 
     override fun onCreateView(
@@ -53,15 +42,10 @@ class FavoriteFragment : Fragment() {
 
         getAllData()
 
-//        Thread.sleep(2000)
-
-
-//        Log.e("TAG", readAllData.toString())
-
         Thread.sleep(100)
         val Adapter = FavoriteAdapter(coinList)
         binding.rvCoins.layoutManager =
-            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
         binding.rvCoins.adapter = Adapter
     }
 
