@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/descriptionCoinFragment"
         android:name="com.example.improvedcrypto.files.main.description.DescriptionCoinFragment"
-        android:label="DescriptionCoinFragment"
+        android:label="Description"
         tools:layout="@layout/fragment_description">
         <argument
             android:name="ID"/>

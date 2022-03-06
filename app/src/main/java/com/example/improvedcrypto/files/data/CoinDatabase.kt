@@ -30,5 +30,6 @@ abstract class CoinDatabase : RoomDatabase() {
             }
 
         }
+
     }
 }
