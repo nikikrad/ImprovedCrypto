@@ -16,6 +16,7 @@ import com.example.improvedcrypto.files.data.Coin
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 import com.example.improvedcrypto.files.data.repository.CoinRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import android.content.Context as Context
@@ -46,7 +47,6 @@ class DescriptionCoinFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
-
         descriotionCoinViewModel.liveData.observe(viewLifecycleOwner, Observer {
 
             Glide.with(view)
@@ -63,19 +63,31 @@ class DescriptionCoinFragment : Fragment() {
             var resource: Resources = resources
             var textRedColor = resource.getColor(R.color.red, null)
             var textGreenColor = resource.getColor(R.color.green, null)
-            if(it.marketData.changePrice > 0) binding.tvChangePrice.setTextColor(textGreenColor)
+            if (it.marketData.changePrice > 0) binding.tvChangePrice.setTextColor(textGreenColor)
             else binding.tvChangePrice.setTextColor(textRedColor)
 
             binding.tvPrice.setText(it.marketData.currentPrice.usd.toString() + " $")
 
             val Adapter = DescriptionCoinAdapter(it.description.en)
             binding.rvDescription.layoutManager =
-                LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(
+                    activity?.applicationContext,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             binding.rvDescription.adapter = Adapter
 
-            val coin = Coin(0, it.symbol, it.name, it.image.large, it.description.en, it.marketData.currentPrice.usd, it.marketData.changePrice)
+            val coin = Coin(
+                0,
+                it.symbol,
+                it.name,
+                it.image.large,
+                it.description.en,
+                it.marketData.currentPrice.usd,
+                it.marketData.changePrice
+            )
 
-            binding.btnAddToDataBase.setOnClickListener{
+            binding.btnAddToDataBase.setOnClickListener {
                 insertToDataBase(coin)
             }
         })
@@ -83,16 +95,14 @@ class DescriptionCoinFragment : Fragment() {
     }
 
 
-    fun insertToDataBase(coin: Coin){
-        val coinDao = activity?.let { CoinDatabase.getDatabase(it).CoinDao() }
-        val repository: CoinRepository? = coinDao?.let { CoinRepository(it) }
-        viewLifecycleOwner.lifecycleScope.launch {
+    fun insertToDataBase(coin: Coin) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val coinDao = activity?.let { CoinDatabase.getDatabase(it).CoinDao() }
+            val repository: CoinRepository? = coinDao?.let { CoinRepository(it) }
             if (repository != null) {
                 repository.addCoin(coin)
             }
         }
-
-
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

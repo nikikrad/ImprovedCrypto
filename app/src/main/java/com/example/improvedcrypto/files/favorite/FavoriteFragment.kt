@@ -11,9 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Database
 import com.example.improvedcrypto.databinding.FragmentFavoriteBinding
 import com.example.improvedcrypto.files.data.Coin
 import com.example.improvedcrypto.files.data.CoinDatabase
+import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 import com.example.improvedcrypto.files.data.repository.CoinRepository
 import com.example.improvedcrypto.files.main.description.DescriptionCoinAdapter
 import com.example.improvedcrypto.files.main.description.DescriptionCoinViewModel
@@ -28,7 +30,9 @@ class FavoriteFragment : Fragment() {
     lateinit var favoriteViewModel: FavoriteViewModel
 
     //    lateinit var readAllData: List<Coin>
-    var coinList = emptyList<Coin>()
+
+    var coinList:  MutableList<DatabaseParameters> = emptyList<DatabaseParameters>().toMutableList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,21 +58,25 @@ class FavoriteFragment : Fragment() {
 
 //        Log.e("TAG", readAllData.toString())
 
-
-//        val Adapter = FavoriteAdapter(readAllData)
-//        binding.rvCoins.layoutManager =
-//            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
-//        binding.rvCoins.adapter = Adapter
+        Thread.sleep(100)
+        val Adapter = FavoriteAdapter(coinList)
+        binding.rvCoins.layoutManager =
+            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
+        binding.rvCoins.adapter = Adapter
     }
 
     fun getAllData() {
         lifecycleScope.launch(Dispatchers.IO) {
             val coinDao = activity?.let { CoinDatabase.getDatabase(it).CoinDao() }
             val repository: CoinRepository? = coinDao?.let { CoinRepository(it) }
-//            val appddb: CoinDatabase? = activity?.let { CoinDatabase.getDatabase(it) }
-            val readAllData = repository?.readAllData!!
-            Log.e("TAG", readAllData.toString())
+            val readAllData = repository?.readAllData
+            if (readAllData != null) {
+                readAllData.forEach{
+                    coinList.add(DatabaseParameters(it.symbol, it.name, it.image, it.description, it.currentPrice, it.changePrice))
+                }
+            }
         }
+
 
     }
 

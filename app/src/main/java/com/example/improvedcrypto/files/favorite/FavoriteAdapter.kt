@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.files.data.Coin
+import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 
 
 class FavoriteAdapter(
-    private val coinList:  List<Coin>
+    private val coinList:  List<DatabaseParameters>
 ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -37,7 +38,7 @@ class FavoriteAdapter(
         private val name: TextView = itemView.findViewById(R.id.tv_Name)
         private val avatar: ImageView = itemView.findViewById(R.id.iv_Avatar)
 
-        fun bind(item: Coin) {
+        fun bind(item: DatabaseParameters) {
 
             name.text = item.name
             Glide.with(itemView)

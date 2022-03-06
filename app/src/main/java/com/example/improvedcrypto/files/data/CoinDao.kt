@@ -13,6 +13,6 @@ interface CoinDao {
     @Delete
     suspend fun deleteCoin(coin: Coin)
 
-    @Query("SELECT * FROM coin_table ORDER BY id ASC")
+    @Query("SELECT * FROM coin_table")
     fun readAllData(): List<Coin>
 }
