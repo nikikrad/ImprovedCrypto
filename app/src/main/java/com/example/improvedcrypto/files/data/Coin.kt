@@ -2,10 +2,11 @@ package com.example.improvedcrypto.files.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "coin_table")
+@Entity(tableName = "coin_table", indices = [Index(value = ["name"], unique = true)])
 class Coin(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,

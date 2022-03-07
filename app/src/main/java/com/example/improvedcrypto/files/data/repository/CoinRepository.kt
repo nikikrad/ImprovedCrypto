@@ -11,5 +11,8 @@ class CoinRepository(private val coinDao: CoinDao){
     suspend fun addCoin(coin: Coin){
         coinDao.addCoin(coin)
     }
-//    suspend fun delete(coin: Coin, onSuccess:() -> Unit)
+
+    suspend fun deleteCoin(coin: Coin){
+        coinDao.deleteCoin(coin)
+    }
 }

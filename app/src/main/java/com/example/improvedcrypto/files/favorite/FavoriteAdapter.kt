@@ -8,12 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
-import com.example.improvedcrypto.files.data.Coin
+import com.example.improvedcrypto.databinding.FragmentFavoriteBinding
 import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 
 
 class FavoriteAdapter(
-    private val coinList:  List<DatabaseParameters>
+    private val coinList: List<DatabaseParameters>,
+    private val binding: FragmentFavoriteBinding,
+    private val favoriteViewModel: FavoriteViewModel
 ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -22,7 +24,7 @@ class FavoriteAdapter(
     ): FavoriteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.item_favoritecoin, parent, false)
-        return FavoriteViewHolder(view)
+        return FavoriteViewHolder(view, binding, favoriteViewModel)
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
@@ -32,7 +34,9 @@ class FavoriteAdapter(
     override fun getItemCount(): Int = coinList.size
 
     class FavoriteViewHolder(
-        itemView: View
+        itemView: View,
+        private val binding: FragmentFavoriteBinding,
+        private val favoriteViewModel: FavoriteViewModel
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val name: TextView = itemView.findViewById(R.id.tv_Name)
@@ -55,6 +59,13 @@ class FavoriteAdapter(
                 .load(item.image)
                 .placeholder(R.drawable.ic_no_image)
                 .into(avatar)
+
+
+            itemView.setOnClickListener {
+                val delete: FavoriteFragment = FavoriteFragment()
+                delete.showSnackBar(binding, item, favoriteViewModel)
+
+            }
         }
     }
 }

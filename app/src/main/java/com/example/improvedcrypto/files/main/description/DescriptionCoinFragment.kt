@@ -105,10 +105,6 @@ class DescriptionCoinFragment : Fragment() {
         }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
 
     override fun onDestroy() {
         super.onDestroy()

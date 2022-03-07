@@ -16,10 +16,10 @@ abstract class CoinDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): CoinDatabase {
             val tempInstance = INSTANCE
-            if(tempInstance != null){
+            if (tempInstance != null) {
                 return tempInstance
             }
-            synchronized(this){
+            synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     CoinDatabase::class.java,
