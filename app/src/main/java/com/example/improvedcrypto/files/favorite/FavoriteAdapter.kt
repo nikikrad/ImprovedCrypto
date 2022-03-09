@@ -1,5 +1,6 @@
 package com.example.improvedcrypto.files.favorite
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,8 @@ import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 class FavoriteAdapter(
     private val coinList: List<DatabaseParameters>,
     private val binding: FragmentFavoriteBinding,
-    private val favoriteViewModel: FavoriteViewModel
+    private val favoriteViewModel: FavoriteViewModel,
+    private val applicationContext: Context
 
 ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
@@ -25,7 +27,7 @@ class FavoriteAdapter(
     ): FavoriteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.item_favoritecoin, parent, false)
-        return FavoriteViewHolder(view, binding, favoriteViewModel)
+        return FavoriteViewHolder(view, binding, favoriteViewModel, applicationContext)
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
@@ -37,7 +39,8 @@ class FavoriteAdapter(
     class FavoriteViewHolder(
         itemView: View,
         private val binding: FragmentFavoriteBinding,
-        private val favoriteViewModel: FavoriteViewModel
+        private val favoriteViewModel: FavoriteViewModel,
+        private val applicationContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val name: TextView = itemView.findViewById(R.id.tv_Name)
@@ -64,7 +67,7 @@ class FavoriteAdapter(
 
             itemView.setOnClickListener {
                 val delete = FavoriteFragment()
-                delete.showSnackBar(binding, item, favoriteViewModel)
+                delete.showSnackBar(binding, item, favoriteViewModel, applicationContext)
 
             }
         }

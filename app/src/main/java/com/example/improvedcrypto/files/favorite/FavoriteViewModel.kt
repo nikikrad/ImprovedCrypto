@@ -53,7 +53,7 @@ class FavoriteViewModel : ViewModel() {
     suspend fun deleteCoin(coin: Coin, database: CoinDatabase?){
         val coinDao = database?.CoinDao()
         if (coinDao != null) {
-            coinDao.deleteCoin(coin)
+            coinDao.deleteCoin(coin.name)
         }
     }
 

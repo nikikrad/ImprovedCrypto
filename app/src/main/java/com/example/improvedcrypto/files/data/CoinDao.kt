@@ -10,8 +10,8 @@ interface CoinDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addCoin(coin: Coin)
 
-    @Delete
-    suspend fun deleteCoin(coin: Coin)
+    @Query("DELETE FROM coin_table WHERE name = :name")
+    suspend fun deleteCoin(name: String)
 
     @Query("SELECT * FROM coin_table")
     fun readAllData(): List<Coin>

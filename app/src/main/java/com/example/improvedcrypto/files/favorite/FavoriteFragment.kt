@@ -1,5 +1,6 @@
 package com.example.improvedcrypto.files.favorite
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +23,6 @@ class FavoriteFragment : Fragment() {
     lateinit var binding: FragmentFavoriteBinding
     lateinit var favoriteViewModel: FavoriteViewModel
 
-//    var coinList: MutableList<DatabaseParameters> = emptyList<DatabaseParameters>().toMutableList()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         favoriteViewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
@@ -40,18 +38,16 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val Adapter = FavoriteAdapter(getAllData(), binding, favoriteViewModel)
+        val Adapter = activity?.let { FavoriteAdapter(getAllData(), binding, favoriteViewModel, it.applicationContext ) }
         binding.rvCoins.layoutManager =
             LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
         binding.rvCoins.adapter = Adapter
-
-
     }
 
     fun getAllData(): MutableList<DatabaseParameters>  {
         var coinList: MutableList<DatabaseParameters> = emptyList<DatabaseParameters>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
-            val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
+            val database = activity?.applicationContext?.let { getDatabase(it) }
             coinList = favoriteViewModel.getAllData(database)
         }
         Thread.sleep(100)
@@ -61,7 +57,8 @@ class FavoriteFragment : Fragment() {
     fun showSnackBar(
         binding: FragmentFavoriteBinding,
         coin: DatabaseParameters,
-        favoriteViewModel: FavoriteViewModel
+        favoriteViewModel: FavoriteViewModel,
+        applicationContext: Context
     ) {
         Snackbar.make(
             binding.fragmentFavoriteCoin,
@@ -69,17 +66,20 @@ class FavoriteFragment : Fragment() {
             Snackbar.LENGTH_LONG
         ).setAction("Delete") {
             val processedCoin = favoriteViewModel.processingCoin(coin)
-            deleteCoin(processedCoin, favoriteViewModel)
+            deleteCoin(processedCoin, favoriteViewModel, applicationContext)
         }.show()
     }
 
-    fun deleteCoin(coin: Coin, favoriteViewModel: FavoriteViewModel) {
+    fun getDatabase(context: Context): CoinDatabase {
+            val database = context.let { CoinDatabase.getDatabase(it) }
+        return database
+    }
+
+    fun deleteCoin(coin: Coin, favoriteViewModel: FavoriteViewModel, applicationContext: Context) {
         lifecycleScope.launch(Dispatchers.IO) {
-            val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
+            val database = getDatabase(applicationContext)
             favoriteViewModel.deleteCoin(coin, database)
         }
-
-
     }
 
     override fun onDestroy() {

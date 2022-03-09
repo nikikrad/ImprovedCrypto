@@ -12,6 +12,6 @@ class CoinRepository(private val coinDao: CoinDao){
     }
 
     suspend fun deleteCoin(coin: Coin){
-        coinDao.deleteCoin(coin)
+        coinDao.deleteCoin(coin.name)
     }
 }
