@@ -90,18 +90,18 @@ class DescriptionCoinFragment : Fragment() {
             binding.btnAddToDataBase.setOnClickListener {
                 insertToDataBase(coin)
             }
+
+
         })
 
     }
 
 
     fun insertToDataBase(coin: Coin) {
+
         lifecycleScope.launch(Dispatchers.IO) {
-            val coinDao = activity?.let { CoinDatabase.getDatabase(it).CoinDao() }
-            val repository: CoinRepository? = coinDao?.let { CoinRepository(it) }
-            if (repository != null) {
-                repository.addCoin(coin)
-            }
+            val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
+            descriotionCoinViewModel.sendCoinToDatabase(coin, database)
         }
     }
 

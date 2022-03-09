@@ -16,6 +16,7 @@ class FavoriteAdapter(
     private val coinList: List<DatabaseParameters>,
     private val binding: FragmentFavoriteBinding,
     private val favoriteViewModel: FavoriteViewModel
+
 ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -62,7 +63,7 @@ class FavoriteAdapter(
 
 
             itemView.setOnClickListener {
-                val delete: FavoriteFragment = FavoriteFragment()
+                val delete = FavoriteFragment()
                 delete.showSnackBar(binding, item, favoriteViewModel)
 
             }
