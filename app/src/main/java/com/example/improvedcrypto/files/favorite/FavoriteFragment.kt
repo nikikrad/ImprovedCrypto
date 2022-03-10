@@ -5,10 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentFavoriteBinding
 import com.example.improvedcrypto.files.data.Coin
 import com.example.improvedcrypto.files.data.CoinDatabase
@@ -22,6 +27,7 @@ class FavoriteFragment : Fragment() {
 
     lateinit var binding: FragmentFavoriteBinding
     lateinit var favoriteViewModel: FavoriteViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +48,8 @@ class FavoriteFragment : Fragment() {
         binding.rvCoins.layoutManager =
             LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
         binding.rvCoins.adapter = Adapter
+
+        refreshApp()
     }
 
     fun getAllData(): MutableList<DatabaseParameters>  {
@@ -67,6 +75,7 @@ class FavoriteFragment : Fragment() {
         ).setAction("Delete") {
             val processedCoin = favoriteViewModel.processingCoin(coin)
             deleteCoin(processedCoin, favoriteViewModel, applicationContext)
+            Toast.makeText(applicationContext, "Removal is Successful", Toast.LENGTH_SHORT).show()
         }.show()
     }
 
@@ -81,6 +90,15 @@ class FavoriteFragment : Fragment() {
             favoriteViewModel.deleteCoin(coin, database)
         }
     }
+
+    private fun refreshApp(){
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            NavHostFragment.findNavController(this).navigate(R.id.action_favoriteFragment_self)
+        }
+    }
+
+
 
     override fun onDestroy() {
         super.onDestroy()

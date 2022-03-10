@@ -20,13 +20,20 @@
             app:destination="@id/descriptionCoinFragment"
             app:enterAnim="@anim/nav_default_pop_enter_anim"
             app:exitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_mainFragment_self"
+            app:destination="@+id/mainFragment"/>
     </fragment>
 
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.improvedcrypto.files.favorite.FavoriteFragment"
         android:label="Favorite Coins"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite">
+        <action android:id="@+id/action_favoriteFragment_self"
+            app:destination="@+id/favoriteFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/descriptionCoinFragment"
         android:name="com.example.improvedcrypto.files.main.description.DescriptionCoinFragment"

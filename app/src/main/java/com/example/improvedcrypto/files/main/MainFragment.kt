@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.R
@@ -36,7 +37,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-
         mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
             it.forEach {
                 responseBody.add(it)
@@ -49,6 +49,14 @@ class MainFragment : Fragment() {
         binding.rvCoins.adapter = Adapter
         responseBody.clear()
 
+        refreshApp()
+    }
+
+    private fun refreshApp(){
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_self)
+        }
     }
 
     override fun onDestroy() {
