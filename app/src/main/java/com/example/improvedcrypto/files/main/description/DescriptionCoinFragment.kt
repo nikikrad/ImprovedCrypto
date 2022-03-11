@@ -90,10 +90,7 @@ class DescriptionCoinFragment : Fragment() {
             binding.btnAddToDataBase.setOnClickListener {
                 insertToDataBase(coin)
             }
-
-
         })
-
     }
 
 

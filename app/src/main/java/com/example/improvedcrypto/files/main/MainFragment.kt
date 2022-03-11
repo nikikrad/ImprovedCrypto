@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.improvedcrypto.MainActivity
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentMainBinding
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
@@ -37,19 +40,23 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
-            it.forEach {
-                responseBody.add(it)
-            }
-        })
 
-        val Adapter = MainAdapter(responseBody)
+        val Adapter = MainAdapter(getAllCoinFromServer())
         binding.rvCoins.layoutManager =
             LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
         binding.rvCoins.adapter = Adapter
         responseBody.clear()
 
         refreshApp()
+    }
+
+    private fun getAllCoinFromServer(): MutableList<CoinResponse>{
+        mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
+            it.forEach {
+                responseBody.add(it)
+            }
+        })
+        return responseBody
     }
 
     private fun refreshApp(){

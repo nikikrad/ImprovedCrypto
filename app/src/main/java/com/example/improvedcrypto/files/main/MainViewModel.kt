@@ -15,7 +15,7 @@ class MainViewModel: ViewModel() {
 
     val liveData: MutableLiveData<List<CoinResponse>> = MutableLiveData()
 
-    fun getResponse() {
+    fun getResponse(){
 
         val retrofit = RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
 
@@ -26,21 +26,8 @@ class MainViewModel: ViewModel() {
                 liveData.postValue(bodyGecon)
             }
         }
+
     }
-
-//    fun getData(context: Context){
-//        CoinDatabase.getDatabase(context)
-//    }
-//
-//    fun proccesingData(database: CoinDatabase){
-//
-//    }
-
-//    lateinit var database: CoinDatabase()
-//
-//    fun getDatabase(getDatabase: database): CoinDatabase{
-//
-//    }
 
     override fun onCleared() {
         super.onCleared()

@@ -75,6 +75,11 @@ class FavoriteFragment : Fragment() {
         ).setAction("Delete") {
             val processedCoin = favoriteViewModel.processingCoin(coin)
             deleteCoin(processedCoin, favoriteViewModel, applicationContext)
+            lifecycleScope.launchWhenResumed {
+               val navHostFragment =
+                    parentFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+                navHostFragment.findNavController().navigate(R.id.action_favoriteFragment_self)
+            }
             Toast.makeText(applicationContext, "Removal is Successful", Toast.LENGTH_SHORT).show()
         }.show()
     }
