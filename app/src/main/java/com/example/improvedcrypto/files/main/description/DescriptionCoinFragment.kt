@@ -3,6 +3,10 @@ package com.example.improvedcrypto.files.main.description
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.*
+import android.widget.Switch
+import android.widget.Toolbar
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -14,12 +18,8 @@ import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentDescriptionBinding
 import com.example.improvedcrypto.files.data.Coin
 import com.example.improvedcrypto.files.data.CoinDatabase
-import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
-import com.example.improvedcrypto.files.data.repository.CoinRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import android.content.Context as Context
 
 class DescriptionCoinFragment : Fragment() {
 
@@ -38,9 +38,6 @@ class DescriptionCoinFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDescriptionBinding.inflate(inflater, container, false)
-
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         return binding.root
     }
 
@@ -60,9 +57,9 @@ class DescriptionCoinFragment : Fragment() {
 
             binding.tvChangePrice.setText(it.marketData.changePrice.toString() + " %")
 
-            var resource: Resources = resources
-            var textRedColor = resource.getColor(R.color.red, null)
-            var textGreenColor = resource.getColor(R.color.green, null)
+            val resource: Resources = resources
+            val textRedColor = resource.getColor(R.color.red, null)
+            val textGreenColor = resource.getColor(R.color.green, null)
             if (it.marketData.changePrice > 0) binding.tvChangePrice.setTextColor(textGreenColor)
             else binding.tvChangePrice.setTextColor(textRedColor)
 
@@ -100,6 +97,21 @@ class DescriptionCoinFragment : Fragment() {
             val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
             descriotionCoinViewModel.sendCoinToDatabase(coin, database)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.favorite -> {
+
+            }
+        }
+        return true
     }
 
 

@@ -2,9 +2,7 @@ package com.example.improvedcrypto.files.favorite
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -44,7 +42,14 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val Adapter = activity?.let { FavoriteAdapter(getAllData(), binding, favoriteViewModel, it.applicationContext ) }
+        val Adapter = activity?.let {
+            FavoriteAdapter(
+                getAllData(),
+                binding,
+                favoriteViewModel,
+                it.applicationContext
+            )
+        }
         binding.rvCoins.layoutManager =
             LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
         binding.rvCoins.adapter = Adapter
@@ -52,8 +57,9 @@ class FavoriteFragment : Fragment() {
         refreshApp()
     }
 
-    fun getAllData(): MutableList<DatabaseParameters>  {
-        var coinList: MutableList<DatabaseParameters> = emptyList<DatabaseParameters>().toMutableList()
+    fun getAllData(): MutableList<DatabaseParameters> {
+        var coinList: MutableList<DatabaseParameters> =
+            emptyList<DatabaseParameters>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { getDatabase(it) }
             coinList = favoriteViewModel.getAllData(database)
@@ -76,7 +82,7 @@ class FavoriteFragment : Fragment() {
             val processedCoin = favoriteViewModel.processingCoin(coin)
             deleteCoin(processedCoin, favoriteViewModel, applicationContext)
             lifecycleScope.launchWhenResumed {
-               val navHostFragment =
+                val navHostFragment =
                     parentFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
                 navHostFragment.findNavController().navigate(R.id.action_favoriteFragment_self)
             }
@@ -85,7 +91,7 @@ class FavoriteFragment : Fragment() {
     }
 
     fun getDatabase(context: Context): CoinDatabase {
-            val database = context.let { CoinDatabase.getDatabase(it) }
+        val database = context.let { CoinDatabase.getDatabase(it) }
         return database
     }
 
@@ -96,13 +102,12 @@ class FavoriteFragment : Fragment() {
         }
     }
 
-    private fun refreshApp(){
+    private fun refreshApp() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
             NavHostFragment.findNavController(this).navigate(R.id.action_favoriteFragment_self)
         }
     }
-
 
 
     override fun onDestroy() {

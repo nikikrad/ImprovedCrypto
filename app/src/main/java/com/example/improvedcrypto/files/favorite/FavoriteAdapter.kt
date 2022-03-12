@@ -46,8 +46,6 @@ class FavoriteAdapter(
         private val name: TextView = itemView.findViewById(R.id.tv_Name)
         private val avatar: ImageView = itemView.findViewById(R.id.iv_Avatar)
         private val symbols: TextView = itemView.findViewById(R.id.tv_Symbol)
-        private val price: TextView = itemView.findViewById(R.id.tv_Price)
-        private val changePrice: TextView = itemView.findViewById(R.id.tv_ChangePrice)
         private val description: TextView = itemView.findViewById(R.id.tv_Description)
 
 
@@ -55,8 +53,6 @@ class FavoriteAdapter(
 
             name.text = item.name
             symbols.text = item.symbol
-            price.text = item.currentPrice.toString()
-            changePrice.text = item.changePrice.toString()
             description.text = item.description
 
             Glide.with(itemView)
