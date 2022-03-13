@@ -40,6 +40,7 @@ class DescriptionCoinFragment : Fragment() {
         binding = FragmentDescriptionBinding.inflate(inflater, container, false)
 
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // hi
 
         return binding.root
     }
