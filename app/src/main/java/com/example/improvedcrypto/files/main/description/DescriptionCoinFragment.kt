@@ -3,11 +3,15 @@ package com.example.improvedcrypto.files.main.description
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
@@ -38,15 +42,14 @@ class DescriptionCoinFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDescriptionBinding.inflate(inflater, container, false)
+        val view = inflater.inflate(R.layout.fragment_description, container, false)
 
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        // hi
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
 
         descriotionCoinViewModel.liveData.observe(viewLifecycleOwner, Observer {
 
@@ -78,6 +81,8 @@ class DescriptionCoinFragment : Fragment() {
                 )
             binding.rvDescription.adapter = Adapter
 
+
+
             val coin = Coin(
                 0,
                 it.symbol,
@@ -87,6 +92,16 @@ class DescriptionCoinFragment : Fragment() {
                 it.marketData.currentPrice.usd,
                 it.marketData.changePrice
             )
+
+            val clickAnimation: Animation = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.click_alpha)
+            binding.btnBack.setOnClickListener {
+                binding.btnBack.startAnimation(clickAnimation)
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_descriptionCoinFragment_to_mainFragment)
+            }
+            binding.btnFavorite.setOnClickListener {
+
+            }
 
             binding.btnAddToDataBase.setOnClickListener {
                 insertToDataBase(coin)
