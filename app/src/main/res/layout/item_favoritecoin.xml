@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:fontFamily="@font/inconsolata_regular"
-        android:hint="Binance USD"
+        android:hint="btc"
         android:textColor="#595959"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/v_Main"
