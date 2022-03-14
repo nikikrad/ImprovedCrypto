@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="@+id/btn_Back" />
 
     <ImageButton
-        android:id="@+id/btn_Favorite"
+        android:id="@+id/imgbtn_Favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"

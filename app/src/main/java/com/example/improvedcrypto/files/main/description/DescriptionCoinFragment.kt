@@ -18,6 +18,7 @@ import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentDescriptionBinding
 import com.example.improvedcrypto.files.data.Coin
 import com.example.improvedcrypto.files.data.CoinDatabase
+import com.example.improvedcrypto.files.data.CoinDatabase.Companion.getDatabase
 import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 import com.example.improvedcrypto.files.data.repository.CoinRepository
 import kotlinx.coroutines.Dispatchers
@@ -99,14 +100,29 @@ class DescriptionCoinFragment : Fragment() {
                 Navigation.findNavController(view)
                     .navigate(R.id.action_descriptionCoinFragment_to_mainFragment)
             }
-            binding.btnFavorite.setOnClickListener {
-
+            binding.imgbtnFavorite.setOnClickListener {
+                val id = arguments?.getString("ID")
+                val coinList: MutableList<DatabaseParameters> = getAllData()
+                coinList.forEach {
+                    if(it.name == id) binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_rate)
+                    else binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_outline)
+                }
             }
 
             binding.btnAddToDataBase.setOnClickListener {
                 insertToDataBase(coin)
             }
         })
+    }
+
+    fun getAllData(): MutableList<DatabaseParameters>  {
+        var coinList: MutableList<DatabaseParameters> = emptyList<DatabaseParameters>().toMutableList()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val database = activity?.applicationContext?.let { getDatabase(it) }
+            coinList = descriotionCoinViewModel.getAllData(database)
+        }
+        Thread.sleep(100)
+        return coinList
     }
 
 
