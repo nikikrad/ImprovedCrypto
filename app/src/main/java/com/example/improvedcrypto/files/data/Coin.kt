@@ -11,6 +11,8 @@ class Coin(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     @ColumnInfo
+    var nameId: String = "",
+    @ColumnInfo
     var symbol: String = "",
     @ColumnInfo
     var name: String = "",

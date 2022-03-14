@@ -16,6 +16,7 @@ class FavoriteViewModel : ViewModel() {
     fun processingCoin(coin: DatabaseParameters): Coin {
         val processedCoin = Coin(
             0,
+            coin.nameId,
             coin.symbol,
             coin.name,
             coin.image,
@@ -37,6 +38,7 @@ class FavoriteViewModel : ViewModel() {
             coinFromDatabase.forEach {
                 coinList.add(
                     DatabaseParameters(
+                        it.nameId,
                         it.symbol,
                         it.name,
                         it.image,

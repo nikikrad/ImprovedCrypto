@@ -61,6 +61,7 @@ class DescriptionCoinViewModel : ViewModel() {
             coinFromDatabase.forEach {
                 coinList.add(
                     DatabaseParameters(
+                        it.nameId,
                         it.symbol,
                         it.name,
                         it.image,
@@ -74,9 +75,9 @@ class DescriptionCoinViewModel : ViewModel() {
         return coinList
     }
 
-    fun processingDatabaseResponse(id: String, coinList: MutableList<DatabaseParameters>): Boolean {
+    fun processingDatabaseResponse(id: String?, coinList: MutableList<DatabaseParameters>): Boolean {
         coinList.forEach {
-            if (it.name == id) return true
+            if (it.nameId == id) return true
         }
         return false
     }
@@ -84,6 +85,14 @@ class DescriptionCoinViewModel : ViewModel() {
     suspend fun sendCoinToDatabase(coin: Coin, database: CoinDatabase?) {
         val coinDao = database?.CoinDao()
         coinDao?.addCoin(coin)
+    }
+
+    suspend fun deleteCoin(coin: Coin, database: CoinDatabase?){
+        val coinDao = database?.CoinDao()
+        if (coinDao != null) {
+            coinDao.deleteCoin(coin.name)
+        }
+
     }
 
     override fun onCleared() {

@@ -6,6 +6,7 @@ import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -21,6 +22,7 @@ import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.data.CoinDatabase.Companion.getDatabase
 import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 import com.example.improvedcrypto.files.data.repository.CoinRepository
+import com.example.improvedcrypto.files.favorite.FavoriteViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -83,9 +85,14 @@ class DescriptionCoinFragment : Fragment() {
             binding.rvDescription.adapter = Adapter
 
 
+            val coinList: MutableList<DatabaseParameters> = getAllData()
+            var status: Boolean = descriotionCoinViewModel.processingDatabaseResponse(arguments?.getString("ID"), coinList)
+            if(status == true)binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_rate)
+            else binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_outline)
 
             val coin = Coin(
                 0,
+                it.id,
                 it.symbol,
                 it.name,
                 it.image.large,
@@ -94,23 +101,26 @@ class DescriptionCoinFragment : Fragment() {
                 it.marketData.changePrice
             )
 
+            binding.imgbtnFavorite.setOnClickListener {
+                if(status == true){
+                    deleteCoin(coin)
+                    binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_outline)
+                    Toast.makeText(context, coin.name + " is successfully deleted!", Toast.LENGTH_SHORT).show()
+                    status = false
+                }else{
+                    insertToDataBase(coin)
+                    binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_rate)
+                    Toast.makeText(context, coin.name + " is successfully added!", Toast.LENGTH_SHORT).show()
+                    status = true
+                }
+
+            }
+
             val clickAnimation: Animation = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.click_alpha)
             binding.btnBack.setOnClickListener {
                 binding.btnBack.startAnimation(clickAnimation)
                 Navigation.findNavController(view)
                     .navigate(R.id.action_descriptionCoinFragment_to_mainFragment)
-            }
-            binding.imgbtnFavorite.setOnClickListener {
-                val id = arguments?.getString("ID")
-                val coinList: MutableList<DatabaseParameters> = getAllData()
-                coinList.forEach {
-                    if(it.name == id) binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_rate)
-                    else binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_outline)
-                }
-            }
-
-            binding.btnAddToDataBase.setOnClickListener {
-                insertToDataBase(coin)
             }
         })
     }
@@ -131,6 +141,13 @@ class DescriptionCoinFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
             descriotionCoinViewModel.sendCoinToDatabase(coin, database)
+        }
+    }
+
+    fun deleteCoin(coin: Coin) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val database = activity?.applicationContext?.let { getDatabase(it) }
+            descriotionCoinViewModel.deleteCoin(coin, database)
         }
     }
 

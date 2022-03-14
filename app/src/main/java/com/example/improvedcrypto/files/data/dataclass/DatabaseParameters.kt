@@ -1,6 +1,7 @@
 package com.example.improvedcrypto.files.data.dataclass
 
 data class DatabaseParameters(
+    var nameId: String,
     var symbol: String,
     var name: String,
     var image: String,

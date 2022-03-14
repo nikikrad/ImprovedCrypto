@@ -33,6 +33,9 @@
         tools:layout="@layout/fragment_favorite">
         <action android:id="@+id/action_favoriteFragment_self"
             app:destination="@+id/favoriteFragment"/>
+        <action
+            android:id="@+id/action_favoriteFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/descriptionCoinFragment"
