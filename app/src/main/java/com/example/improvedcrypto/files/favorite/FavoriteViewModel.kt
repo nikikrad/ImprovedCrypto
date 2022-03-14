@@ -57,7 +57,5 @@ class FavoriteViewModel : ViewModel() {
         if (coinDao != null) {
             coinDao.deleteCoin(coin.name)
         }
-
     }
-
 }

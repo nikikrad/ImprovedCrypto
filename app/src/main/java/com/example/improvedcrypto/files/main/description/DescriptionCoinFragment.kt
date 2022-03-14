@@ -87,8 +87,8 @@ class DescriptionCoinFragment : Fragment() {
 
             val coinList: MutableList<DatabaseParameters> = getAllData()
             var status: Boolean = descriotionCoinViewModel.processingDatabaseResponse(arguments?.getString("ID"), coinList)
-            if(status == true)binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_rate)
-            else binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_outline)
+            if(status == true)binding.ibLike.setImageResource(R.drawable.ic_star_rate)
+            else binding.ibLike.setImageResource(R.drawable.ic_star_outline)
 
             val coin = Coin(
                 0,
@@ -101,15 +101,15 @@ class DescriptionCoinFragment : Fragment() {
                 it.marketData.changePrice
             )
 
-            binding.imgbtnFavorite.setOnClickListener {
+            binding.ibLike.setOnClickListener {
                 if(status == true){
                     deleteCoin(coin)
-                    binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_outline)
+                    binding.ibLike.setImageResource(R.drawable.ic_star_outline)
                     Toast.makeText(context, coin.name + " is successfully deleted!", Toast.LENGTH_SHORT).show()
                     status = false
                 }else{
                     insertToDataBase(coin)
-                    binding.imgbtnFavorite.setImageResource(R.drawable.ic_star_rate)
+                    binding.ibLike.setImageResource(R.drawable.ic_star_rate)
                     Toast.makeText(context, coin.name + " is successfully added!", Toast.LENGTH_SHORT).show()
                     status = true
                 }

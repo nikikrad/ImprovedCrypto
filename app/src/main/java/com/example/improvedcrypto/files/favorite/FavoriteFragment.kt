@@ -44,22 +44,33 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val Adapter = activity?.let { FavoriteAdapter(getAllData(), binding, favoriteViewModel, it.applicationContext ) }
-        binding.rvCoins.layoutManager =
-            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvCoins.adapter = Adapter
-
+        adapter()
         refreshApp()
     }
 
-    fun getAllData(): MutableList<DatabaseParameters>  {
-        var coinList: MutableList<DatabaseParameters> = emptyList<DatabaseParameters>().toMutableList()
+    fun getAllData(): MutableList<DatabaseParameters> {
+        var coinList: MutableList<DatabaseParameters> =
+            emptyList<DatabaseParameters>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { getDatabase(it) }
             coinList = favoriteViewModel.getAllData(database)
         }
         Thread.sleep(100)
         return coinList
+    }
+
+    private fun adapter() {
+        val Adapter = activity?.let {
+            FavoriteAdapter(
+                getAllData(),
+                binding,
+                favoriteViewModel,
+                it.applicationContext
+            )
+        }
+        binding.rvCoins.layoutManager =
+            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvCoins.adapter = Adapter
     }
 
     fun showSnackBar(
@@ -75,17 +86,12 @@ class FavoriteFragment : Fragment() {
         ).setAction("Delete") {
             val processedCoin = favoriteViewModel.processingCoin(coin)
             deleteCoin(processedCoin, favoriteViewModel, applicationContext)
-            lifecycleScope.launchWhenResumed {
-               val navHostFragment =
-                    parentFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
-                navHostFragment.findNavController().navigate(R.id.action_favoriteFragment_self)
-            }
             Toast.makeText(applicationContext, "Removal is Successful", Toast.LENGTH_SHORT).show()
         }.show()
     }
 
     fun getDatabase(context: Context): CoinDatabase {
-            val database = context.let { CoinDatabase.getDatabase(it) }
+        val database = context.let { CoinDatabase.getDatabase(it) }
         return database
     }
 
@@ -96,14 +102,12 @@ class FavoriteFragment : Fragment() {
         }
     }
 
-    private fun refreshApp(){
+    private fun refreshApp() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-            NavHostFragment.findNavController(this).navigate(R.id.action_favoriteFragment_self)
+            adapter()
         }
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()
