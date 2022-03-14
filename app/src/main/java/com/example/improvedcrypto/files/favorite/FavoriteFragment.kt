@@ -28,7 +28,6 @@ class FavoriteFragment : Fragment() {
     lateinit var binding: FragmentFavoriteBinding
     lateinit var favoriteViewModel: FavoriteViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         favoriteViewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
