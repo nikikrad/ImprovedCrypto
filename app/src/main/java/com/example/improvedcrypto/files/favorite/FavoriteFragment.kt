@@ -42,18 +42,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val Adapter = activity?.let {
-            FavoriteAdapter(
-                getAllData(),
-                binding,
-                favoriteViewModel,
-                it.applicationContext
-            )
-        }
-        binding.rvCoins.layoutManager =
-            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvCoins.adapter = Adapter
-
+        adapter()        
         refreshApp()
     }
 
@@ -66,6 +55,20 @@ class FavoriteFragment : Fragment() {
         }
         Thread.sleep(100)
         return coinList
+    }
+
+    private fun adapter() {
+        val Adapter = activity?.let {
+            FavoriteAdapter(
+                getAllData(),
+                binding,
+                favoriteViewModel,
+                it.applicationContext
+            )
+        }
+        binding.rvCoins.layoutManager =
+            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvCoins.adapter = Adapter
     }
 
     fun showSnackBar(
@@ -81,11 +84,6 @@ class FavoriteFragment : Fragment() {
         ).setAction("Delete") {
             val processedCoin = favoriteViewModel.processingCoin(coin)
             deleteCoin(processedCoin, favoriteViewModel, applicationContext)
-            lifecycleScope.launchWhenResumed {
-                val navHostFragment =
-                    parentFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
-                navHostFragment.findNavController().navigate(R.id.action_favoriteFragment_self)
-            }
             Toast.makeText(applicationContext, "Removal is Successful", Toast.LENGTH_SHORT).show()
         }.show()
     }
@@ -105,10 +103,9 @@ class FavoriteFragment : Fragment() {
     private fun refreshApp() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-            NavHostFragment.findNavController(this).navigate(R.id.action_favoriteFragment_self)
+            adapter()
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

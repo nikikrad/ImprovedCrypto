@@ -1,17 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/maingreen"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-<!--        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>-->
+
+    <View
+        android:id="@+id/v_Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/maingreen"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:background="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/v_Toolbar"/>
+
+    <TextView
+        android:id="@+id/tv_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inconsolata_bold"
+        android:text="Description Coin"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_Back"
+        app:layout_constraintStart_toEndOf="@+id/btn_Back"
+        app:layout_constraintTop_toTopOf="@+id/btn_Back" />
+
+    <ImageButton
+        android:id="@+id/ib_Like"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@null"
+        android:src="@drawable/ic_star_outline"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_Title"
+        app:layout_constraintEnd_toEndOf="@+id/v_Toolbar"
+        app:layout_constraintTop_toTopOf="@+id/tv_Title"
+        android:layout_marginEnd="15sp"/>
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/v_Main"
@@ -21,7 +56,7 @@
         android:background="@drawable/rectangle_rounded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/v_Toolbar" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/v_Secondary"
@@ -135,20 +170,5 @@
         app:layout_constraintEnd_toEndOf="@+id/v_Secondary"
         app:layout_constraintStart_toStartOf="@+id/v_Secondary"
         app:layout_constraintTop_toBottomOf="@+id/tv_StaticDescription" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_AddToDataBase"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:background="@drawable/rectangle_rounded"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v_Secondary"
-        android:fontFamily="@font/inconsolata_bold"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:text="Add"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

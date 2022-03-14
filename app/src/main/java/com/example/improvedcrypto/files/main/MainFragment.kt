@@ -38,13 +38,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-
-        val Adapter = MainAdapter(getAllCoinFromServer())
-        binding.rvCoins.layoutManager =
-            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
-        binding.rvCoins.adapter = Adapter
-        responseBody.clear()
-
+        adapter()
         refreshApp()
     }
 
@@ -58,12 +52,21 @@ class MainFragment : Fragment() {
     }
 
 
+    private fun adapter(){
+        responseBody.clear()
+        val Adapter = MainAdapter(getAllCoinFromServer())
+        binding.rvCoins.layoutManager =
+            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
+        binding.rvCoins.adapter = Adapter
+    }
+
 
     private fun refreshApp(){
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-            getAllCoinFromServer()
-            NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_self)
+
+            adapter()
+
         }
     }
 

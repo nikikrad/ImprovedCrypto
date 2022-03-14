@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.improvedcrypto.R
 import com.example.improvedcrypto.files.api.ApiService
 import com.example.improvedcrypto.files.api.instance.RetrofitInstance
 import com.example.improvedcrypto.files.data.Coin
 import com.example.improvedcrypto.files.data.CoinDao
 import com.example.improvedcrypto.files.data.CoinDatabase
+import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 import com.example.improvedcrypto.files.data.repository.CoinRepository
 import com.example.improvedcrypto.files.main.description.dataclass.ResponseDescription
 import kotlinx.coroutines.CoroutineScope
@@ -47,9 +49,50 @@ class DescriptionCoinViewModel : ViewModel() {
 
     }
 
-    suspend fun sendCoinToDatabase(coin: Coin, database: CoinDatabase?){
+
+    fun getAllData(database: CoinDatabase?): MutableList<DatabaseParameters> {
+
+        var coinList: MutableList<DatabaseParameters> =
+            emptyList<DatabaseParameters>().toMutableList()
+        val coinDao = database?.CoinDao()
+        val coinFromDatabase = coinDao?.readAllData()
+
+        if (coinFromDatabase != null) {
+            coinFromDatabase.forEach {
+                coinList.add(
+                    DatabaseParameters(
+                        it.nameId,
+                        it.symbol,
+                        it.name,
+                        it.image,
+                        it.description,
+                        it.currentPrice,
+                        it.changePrice
+                    )
+                )
+            }
+        }
+        return coinList
+    }
+
+    fun processingDatabaseResponse(id: String?, coinList: MutableList<DatabaseParameters>): Boolean {
+        coinList.forEach {
+            if (it.nameId == id) return true
+        }
+        return false
+    }
+
+    suspend fun sendCoinToDatabase(coin: Coin, database: CoinDatabase?) {
         val coinDao = database?.CoinDao()
         coinDao?.addCoin(coin)
+    }
+
+    suspend fun deleteCoin(coin: Coin, database: CoinDatabase?){
+        val coinDao = database?.CoinDao()
+        if (coinDao != null) {
+            coinDao.deleteCoin(coin.name)
+        }
+
     }
 
     override fun onCleared() {

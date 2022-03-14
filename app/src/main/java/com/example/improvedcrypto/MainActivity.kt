@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.findNavController()
-        setSupportActionBar(binding.toolbar)
-        setupActionBarWithNavController(navController)
+//        setSupportActionBar(binding.toolbar)
+//        setupActionBarWithNavController(navController)
         val bottomNavigationView = binding.bottomNavigationView
-        val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.mainFragment, R.id.favoriteFragment))
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        val appBarConfiguration =
+//            AppBarConfiguration(setOf(R.id.mainFragment, R.id.favoriteFragment))
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)
 
     }
