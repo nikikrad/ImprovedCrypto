@@ -60,7 +60,6 @@ class FavoriteAdapter(
                 .placeholder(R.drawable.ic_no_image)
                 .into(avatar)
 
-
             itemView.setOnClickListener {
                 val delete = FavoriteFragment()
                 delete.showSnackBar(binding, item, favoriteViewModel, applicationContext)
