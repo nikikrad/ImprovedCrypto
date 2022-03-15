@@ -14,6 +14,9 @@ import com.example.improvedcrypto.databinding.FragmentMainBinding
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import com.example.improvedcrypto.files.main.popup.CustomDialogFragment
 
 
 class MainFragment : Fragment() {
@@ -40,9 +43,14 @@ class MainFragment : Fragment() {
 
         adapter()
         refreshApp()
+        binding.ibSort.setOnClickListener {
+            var dialog = CustomDialogFragment()
+
+            dialog.show(parentFragmentManager, "qwe")
+        }
     }
 
-    private fun getAllCoinFromServer(): MutableList<CoinResponse>{
+    private fun getAllCoinFromServer(): MutableList<CoinResponse> {
         mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
             it.forEach {
                 responseBody.add(it)
@@ -52,7 +60,7 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun adapter(){
+    private fun adapter() {
         responseBody.clear()
         val Adapter = MainAdapter(getAllCoinFromServer())
         binding.rvCoins.layoutManager =
@@ -61,7 +69,7 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun refreshApp(){
+    private fun refreshApp() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
 
