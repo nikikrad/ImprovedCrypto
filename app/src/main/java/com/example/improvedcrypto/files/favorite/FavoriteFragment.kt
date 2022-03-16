@@ -41,7 +41,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        adapter()        
+        adapter()
         refreshApp()
     }
 
@@ -65,8 +65,11 @@ class FavoriteFragment : Fragment() {
                 it.applicationContext
             )
         }
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
         binding.rvCoins.layoutManager =
-            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+            linearLayoutManager
         binding.rvCoins.adapter = Adapter
     }
 
