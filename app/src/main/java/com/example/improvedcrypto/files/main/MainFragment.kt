@@ -3,6 +3,7 @@ package com.example.improvedcrypto.files.main
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -44,9 +45,8 @@ class MainFragment : Fragment() {
         adapter()
         refreshApp()
         binding.ibSort.setOnClickListener {
-            var dialog = CustomDialogFragment()
-
-            dialog.show(parentFragmentManager, "qwe")
+            val dialog = CustomDialogFragment()
+            dialog.show(childFragmentManager, "qwe")
         }
     }
 
@@ -59,22 +59,21 @@ class MainFragment : Fragment() {
         return responseBody
     }
 
-
     private fun adapter() {
         responseBody.clear()
         val Adapter = MainAdapter(getAllCoinFromServer())
+        val mLayoutManager = LinearLayoutManager(context);
+        mLayoutManager.setReverseLayout(true)
+        mLayoutManager.stackFromEnd
         binding.rvCoins.layoutManager =
             LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
         binding.rvCoins.adapter = Adapter
     }
 
-
     private fun refreshApp() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-
             adapter()
-
         }
     }
 
