@@ -120,7 +120,7 @@ class DescriptionCoinFragment : Fragment() {
             binding.btnBack.setOnClickListener {
                 binding.btnBack.startAnimation(clickAnimation)
                 Navigation.findNavController(view)
-                    .navigate(R.id.action_descriptionCoinFragment_to_mainFragment)
+                    .navigate(R.id.mainFragment)
             }
         })
     }

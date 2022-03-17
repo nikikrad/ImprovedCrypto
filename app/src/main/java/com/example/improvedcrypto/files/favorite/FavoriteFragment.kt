@@ -68,8 +68,7 @@ class FavoriteFragment : Fragment() {
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
         linearLayoutManager.reverseLayout = true
         linearLayoutManager.stackFromEnd = true
-        binding.rvCoins.layoutManager =
-            linearLayoutManager
+        binding.rvCoins.layoutManager = linearLayoutManager
         binding.rvCoins.adapter = Adapter
     }
 

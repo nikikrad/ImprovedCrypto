@@ -26,7 +26,6 @@ class MainViewModel: ViewModel() {
                 liveData.postValue(bodyGecon)
             }
         }
-
     }
 
     override fun onCleared() {

@@ -27,11 +27,7 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.improvedcrypto.files.favorite.FavoriteFragment"
         android:label="Favorite Coins"
-        tools:layout="@layout/fragment_favorite">
-        <action
-            android:id="@+id/action_favoriteFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_favorite"/>
     <fragment
         android:id="@+id/descriptionCoinFragment"
         android:name="com.example.improvedcrypto.files.main.description.DescriptionCoinFragment"
@@ -39,9 +35,6 @@
         tools:layout="@layout/fragment_description">
         <argument
             android:name="ID"/>
-        <action
-            android:id="@+id/action_descriptionCoinFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
     </fragment>
 
 </navigation>
