@@ -41,7 +41,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        adapter()        
+        adapter()
         refreshApp()
     }
 
@@ -65,8 +65,10 @@ class FavoriteFragment : Fragment() {
                 it.applicationContext
             )
         }
-        binding.rvCoins.layoutManager =
-            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
+        binding.rvCoins.layoutManager = linearLayoutManager
         binding.rvCoins.adapter = Adapter
     }
 
@@ -78,7 +80,7 @@ class FavoriteFragment : Fragment() {
     ) {
         Snackbar.make(
             binding.fragmentFavoriteCoin,
-            "You want to delete " + coin.name + " coin?",
+            "Do you want to delete " + coin.name + " coin?",
             Snackbar.LENGTH_LONG
         ).setAction("Delete") {
             val processedCoin = favoriteViewModel.processingCoin(coin)

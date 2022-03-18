@@ -18,18 +18,19 @@ class CustomDialogFragment: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rootView: View = inflater.inflate(R.layout.fragment_dialog, container, false)
+        val rootView: View = inflater.inflate(R.layout.fragment_dialog, container, false)
         binding = FragmentDialogBinding.inflate(inflater, container, false)
 
-        binding.btnSortByPrice.setOnClickListener {
+        rootView.findViewById<View>(R.id.btn_SortByPrice).setOnClickListener {
             Toast.makeText(activity?.applicationContext, "By Price!", Toast.LENGTH_SHORT).show()
+
+            dismiss()
         }
 
-        binding.btnSortAlphabetically.setOnClickListener {
+        rootView.findViewById<View>(R.id.btn_SortAlphabetically).setOnClickListener {
             Toast.makeText(activity?.applicationContext, "Alpha!", Toast.LENGTH_SHORT).show()
+            dismiss()
         }
-
-
 
         return rootView
     }
