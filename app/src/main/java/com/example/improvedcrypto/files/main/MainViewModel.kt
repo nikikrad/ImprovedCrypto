@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.improvedcrypto.files.api.ApiService
 import com.example.improvedcrypto.files.api.instance.RetrofitInstance
 import com.example.improvedcrypto.files.data.CoinDatabase
+import com.example.improvedcrypto.files.data.ResponseCoinEntity
 import com.example.improvedcrypto.files.main.dataclass.CoinResponse
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -26,6 +27,11 @@ class MainViewModel: ViewModel() {
                 liveData.postValue(bodyGecon)
             }
         }
+    }
+
+    suspend fun sendResponseCoinToDatabase(responseCoins: ResponseCoinEntity, database: CoinDatabase){
+        val coinDao = database?.CoinDao()
+        coinDao?.addResponseCoin(responseCoins)
     }
 
     override fun onCleared() {

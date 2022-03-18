@@ -80,7 +80,7 @@ class FavoriteFragment : Fragment() {
     ) {
         Snackbar.make(
             binding.fragmentFavoriteCoin,
-            "You want to delete " + coin.name + " coin?",
+            "Do you want to delete " + coin.name + " coin?",
             Snackbar.LENGTH_LONG
         ).setAction("Delete") {
             val processedCoin = favoriteViewModel.processingCoin(coin)

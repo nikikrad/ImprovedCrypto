@@ -41,7 +41,6 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         adapter()
         refreshApp()
         binding.ibSort.setOnClickListener {
