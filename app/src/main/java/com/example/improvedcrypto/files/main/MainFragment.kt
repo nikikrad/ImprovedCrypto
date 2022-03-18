@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.improvedcrypto.files.data.Coin
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.data.ResponseCoinEntity
+import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
 import com.example.improvedcrypto.files.main.popup.CustomDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -78,7 +79,7 @@ class MainFragment : Fragment() {
 
     private fun adapter() {
         responseBody.clear()
-        val Adapter = MainAdapter(getAllCoinFromServer())
+        val Adapter = MainAdapter(getAllData())
         val mLayoutManager = LinearLayoutManager(context);
         mLayoutManager.setReverseLayout(true)
         mLayoutManager.stackFromEnd
@@ -101,6 +102,22 @@ class MainFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = false
             adapter()
         }
+    }
+
+    fun getDatabase(context: Context): CoinDatabase {
+        val database = context.let { CoinDatabase.getDatabase(it) }
+        return database
+    }
+
+    fun getAllData(): List<CoinResponse> {
+        var coinList: List<CoinResponse> =
+            emptyList<CoinResponse>().toMutableList()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val database = activity?.applicationContext?.let { getDatabase(it) }
+            coinList = mainViewModel.getAllData(database)
+        }
+        Thread.sleep(100)
+        return coinList
     }
 
     override fun onDestroy() {
