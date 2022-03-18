@@ -18,7 +18,7 @@ class CoinRepository(private val coinDao: CoinDao){
 
     val getAllCoinResponse: List<ResponseCoinEntity> = coinDao.getAllResponseCoin()
 
-    suspend fun addResponseCoin(responseCoin: ResponseCoinEntity){
+    suspend fun addResponseCoin(responseCoin: List<ResponseCoinEntity>){
         coinDao.addResponseCoin(responseCoin)
     }
 }

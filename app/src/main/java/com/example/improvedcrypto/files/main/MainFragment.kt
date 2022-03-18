@@ -17,7 +17,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
+import com.example.improvedcrypto.files.data.Coin
+import com.example.improvedcrypto.files.data.CoinDatabase
+import com.example.improvedcrypto.files.data.ResponseCoinEntity
 import com.example.improvedcrypto.files.main.popup.CustomDialogFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainFragment : Fragment() {
@@ -50,10 +56,22 @@ class MainFragment : Fragment() {
     }
 
     private fun getAllCoinFromServer(): MutableList<CoinResponse> {
+        val responseCoinEntity: MutableList<ResponseCoinEntity> = emptyList<ResponseCoinEntity>().toMutableList()
         mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
             it.forEach {
                 responseBody.add(it)
+                responseCoinEntity.add(
+                    ResponseCoinEntity(
+                        0,
+                        it.id,
+                        it.name,
+                        it.symbol,
+                        it.image,
+                        it.price
+                    )
+                )
             }
+            addCoinsToDataBase(responseCoinEntity)
         })
         return responseBody
     }
@@ -67,6 +85,15 @@ class MainFragment : Fragment() {
         binding.rvCoins.layoutManager =
             LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
         binding.rvCoins.adapter = Adapter
+    }
+
+    fun addCoinsToDataBase(coinList: MutableList<ResponseCoinEntity>) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
+            if (database != null) {
+                mainViewModel.sendResponseCoinToDatabase(coinList, database)
+            }
+        }
     }
 
     private fun refreshApp() {

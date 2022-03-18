@@ -29,7 +29,7 @@ class MainViewModel: ViewModel() {
         }
     }
 
-    suspend fun sendResponseCoinToDatabase(responseCoins: ResponseCoinEntity, database: CoinDatabase){
+    suspend fun sendResponseCoinToDatabase(responseCoins: MutableList<ResponseCoinEntity>, database: CoinDatabase){
         val coinDao = database?.CoinDao()
         coinDao?.addResponseCoin(responseCoins)
     }

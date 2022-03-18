@@ -20,5 +20,5 @@ interface CoinDao {
     fun getAllResponseCoin(): List<ResponseCoinEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addResponseCoin(responseCoin: ResponseCoinEntity)
+    suspend fun addResponseCoin(responseCoin: List<ResponseCoinEntity> )
 }
