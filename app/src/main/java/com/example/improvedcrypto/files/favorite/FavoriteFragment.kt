@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -40,7 +41,14 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        val isEmpty = getAllData()
+        if(isEmpty.size == 0){
+            binding.tvNoCoin.visibility = View.VISIBLE
+            binding.vRoundedNoCoin.visibility = View.VISIBLE
+        }else{
+            binding.tvNoCoin.visibility = View.INVISIBLE
+            binding.vRoundedNoCoin.visibility = View.INVISIBLE
+        }
         adapter()
         refreshApp()
     }

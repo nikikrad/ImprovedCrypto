@@ -89,7 +89,7 @@ class MainFragment : Fragment() {
     }
 
     fun addCoinsToDataBase(coinList: MutableList<ResponseCoinEntity>) {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch(Dispatchers.IO) {2
             val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
             if (database != null) {
                 mainViewModel.sendResponseCoinToDatabase(coinList, database)
