@@ -7,16 +7,16 @@ import android.os.Handler
 import com.example.improvedcrypto.MainActivity
 import com.example.improvedcrypto.R
 
-class HomeActivity : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         supportActionBar?.hide()
         Handler().postDelayed({
-            val intent = Intent(this@HomeActivity, MainActivity::class.java)
+            val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
             startActivity(intent)
-            finish()
+//            finish()
         }, 500)
     }
 }

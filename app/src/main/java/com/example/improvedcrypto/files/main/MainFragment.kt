@@ -36,7 +36,6 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        mainViewModel.getResponse()
     }
 
     override fun onCreateView(
@@ -48,48 +47,33 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mainViewModel.getResponse()
+
         adapter()
-        refreshApp()
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            refreshApp()
+        }
         binding.ibSort.setOnClickListener {
             val dialog = CustomDialogFragment()
             dialog.show(childFragmentManager, "qwe")
         }
     }
 
-    private fun getAllCoinFromServer(): MutableList<CoinResponse> {
-        val responseCoinEntity: MutableList<ResponseCoinEntity> = emptyList<ResponseCoinEntity>().toMutableList()
-        mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
-            it.forEach {
-                responseBody.add(it)
-                responseCoinEntity.add(
-                    ResponseCoinEntity(
-                        0,
-                        it.id,
-                        it.name,
-                        it.symbol,
-                        it.image,
-                        it.price
-                    )
-                )
-            }
-            addCoinsToDataBase(responseCoinEntity)
-        })
-        return responseBody
-    }
-
     private fun adapter() {
-        responseBody.clear()
-        val Adapter = MainAdapter(getAllData())
-        val mLayoutManager = LinearLayoutManager(context);
-        mLayoutManager.setReverseLayout(true)
-        mLayoutManager.stackFromEnd
-        binding.rvCoins.layoutManager =
-            LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
-        binding.rvCoins.adapter = Adapter
+
+        mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
+            responseBody.clear()
+            val Adapter = MainAdapter(it)
+            val mLayoutManager = LinearLayoutManager(context);
+            binding.rvCoins.layoutManager =
+                LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
+            binding.rvCoins.adapter = Adapter
+        })
+
     }
 
     fun addCoinsToDataBase(coinList: MutableList<ResponseCoinEntity>) {
-        lifecycleScope.launch(Dispatchers.IO) {2
+        lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
             if (database != null) {
                 mainViewModel.sendResponseCoinToDatabase(coinList, database)
@@ -98,11 +82,10 @@ class MainFragment : Fragment() {
     }
 
     private fun refreshApp() {
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            binding.swipeRefreshLayout.isRefreshing = false
-            adapter()
-        }
-    }
+        mainViewModel.getResponse()
+        binding.swipeRefreshLayout.isRefreshing = false
+        adapter()
+1    }
 
     fun getDatabase(context: Context): CoinDatabase {
         val database = context.let { CoinDatabase.getDatabase(it) }

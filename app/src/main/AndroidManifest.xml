@@ -15,7 +15,7 @@
         android:theme="@style/Theme.ImprovedCrypto"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".files.splashscreen.HomeActivity"
+            android:name=".files.splashscreen.SplashScreenActivity"
             android:label="Coin"
             android:exported="true" >
             <intent-filter>

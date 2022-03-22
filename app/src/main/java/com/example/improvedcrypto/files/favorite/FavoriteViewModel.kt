@@ -32,7 +32,9 @@ class FavoriteViewModel : ViewModel() {
         var coinList: MutableList<DatabaseParameters> =
             emptyList<DatabaseParameters>().toMutableList()
         val coinDao = database?.CoinDao()
-        val coinFromDatabase = coinDao?.readAllData()
+        val coinRepository = coinDao?.let { CoinRepository(it) }// test
+        val coinFromDatabase = coinRepository?.readAllData//test
+//        val coinFromDatabase = coinDao?.readAllData()
 
         if (coinFromDatabase != null) {
             coinFromDatabase.forEach {
