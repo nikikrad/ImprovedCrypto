@@ -41,16 +41,9 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val isEmpty = getAllData()
-        if(isEmpty.size == 0){
-            binding.tvNoCoin.visibility = View.VISIBLE
-            binding.vRoundedNoCoin.visibility = View.VISIBLE
-        }else{
-            binding.tvNoCoin.visibility = View.INVISIBLE
-            binding.vRoundedNoCoin.visibility = View.INVISIBLE
-        }
-        adapter()
-        refreshApp()
+
+        adapter(binding)
+        refreshApp(binding)
     }
 
     fun getAllData(): MutableList<DatabaseParameters> {
@@ -64,7 +57,15 @@ class FavoriteFragment : Fragment() {
         return coinList
     }
 
-    private fun adapter() {
+    private fun adapter(binding: FragmentFavoriteBinding) {
+        val isEmpty = getAllData()
+        if(isEmpty.size == 0){
+            binding.tvNoCoin.visibility = View.VISIBLE
+            binding.vRoundedNoCoin.visibility = View.VISIBLE
+        }else{
+            binding.tvNoCoin.visibility = View.INVISIBLE
+            binding.vRoundedNoCoin.visibility = View.INVISIBLE
+        }
         val Adapter = activity?.let {
             FavoriteAdapter(
                 getAllData(),
@@ -109,10 +110,10 @@ class FavoriteFragment : Fragment() {
         }
     }
 
-    private fun refreshApp() {
+    private fun refreshApp(binding: FragmentFavoriteBinding) {
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = false
-            adapter()
+            adapter(binding)
         }
     }
 
