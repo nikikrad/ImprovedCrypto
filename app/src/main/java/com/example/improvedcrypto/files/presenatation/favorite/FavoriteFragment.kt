@@ -1,4 +1,4 @@
-package com.example.improvedcrypto.files.favorite
+package com.example.improvedcrypto.files.presenatation.favorite
 
 import android.content.Context
 import android.os.Bundle
@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.databinding.FragmentFavoriteBinding
-import com.example.improvedcrypto.files.data.Coin
+import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.CoinDatabase
-import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
+import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,9 +41,9 @@ class FavoriteFragment : Fragment() {
         refreshApp(binding)
     }
 
-    fun getAllData(): MutableList<DatabaseParameters> {
-        var coinList: MutableList<DatabaseParameters> =
-            emptyList<DatabaseParameters>().toMutableList()
+    fun getAllData(): MutableList<CoinItem> {
+        var coinList: MutableList<CoinItem> =
+            emptyList<CoinItem>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { getDatabase(it) }
             coinList = favoriteViewModel.getAllData(database)
@@ -78,7 +78,7 @@ class FavoriteFragment : Fragment() {
 
     fun showSnackBar(
         binding: FragmentFavoriteBinding,
-        coin: DatabaseParameters,
+        coin: CoinItem,
         favoriteViewModel: FavoriteViewModel,
         applicationContext: Context
     ) {
@@ -98,10 +98,10 @@ class FavoriteFragment : Fragment() {
         return database
     }
 
-    fun deleteCoin(coin: Coin, favoriteViewModel: FavoriteViewModel, applicationContext: Context) {
+    fun deleteCoin(coinEntity: CoinEntity, favoriteViewModel: FavoriteViewModel, applicationContext: Context) {
         lifecycleScope.launch(Dispatchers.IO) {
             val database = getDatabase(applicationContext)
-            favoriteViewModel.deleteCoin(coin, database)
+            favoriteViewModel.deleteCoin(coinEntity, database)
         }
     }
 

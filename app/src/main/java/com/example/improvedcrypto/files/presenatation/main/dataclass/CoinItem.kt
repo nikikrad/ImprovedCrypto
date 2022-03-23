@@ -1,6 +1,6 @@
-package com.example.improvedcrypto.files.data.dataclass
+package com.example.improvedcrypto.files.presenatation.main.dataclass
 
-data class DatabaseParameters(
+data class CoinItem(
     var nameId: String,
     var symbol: String,
     var name: String,

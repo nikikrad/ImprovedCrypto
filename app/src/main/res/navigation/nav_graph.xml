@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.improvedcrypto.files.main.MainFragment"
+        android:name="com.example.improvedcrypto.files.presenatation.main.MainFragment"
         android:label="Cryptocurrencies"
         tools:layout="@layout/fragment_main">
         <action
@@ -25,12 +25,12 @@
 
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.improvedcrypto.files.favorite.FavoriteFragment"
+        android:name="com.example.improvedcrypto.files.presenatation.favorite.FavoriteFragment"
         android:label="Favorite Coins"
         tools:layout="@layout/fragment_favorite"/>
     <fragment
         android:id="@+id/descriptionCoinFragment"
-        android:name="com.example.improvedcrypto.files.main.description.DescriptionCoinFragment"
+        android:name="com.example.improvedcrypto.files.presenatation.main.description.DescriptionCoinFragment"
         android:label="Description"
         tools:layout="@layout/fragment_description">
         <argument

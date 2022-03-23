@@ -1,11 +1,11 @@
-package com.example.improvedcrypto.files.main.popup
+package com.example.improvedcrypto.files.presenatation.main.popup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.improvedcrypto.files.api.ApiService
-import com.example.improvedcrypto.files.api.instance.RetrofitInstance
-import com.example.improvedcrypto.files.main.dataclass.CoinResponse
+import com.example.improvedcrypto.files.domain.ApiService
+import com.example.improvedcrypto.files.domain.instance.RetrofitInstance
+import com.example.improvedcrypto.files.data.dataclass.CoinResponse
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 

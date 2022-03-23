@@ -1,4 +1,4 @@
-package com.example.improvedcrypto.files.main
+package com.example.improvedcrypto.files.presenatation.main
 
 import android.os.Bundle
 import android.view.*
@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.databinding.FragmentMainBinding
-import com.example.improvedcrypto.files.main.dataclass.CoinResponse
-import com.example.improvedcrypto.files.main.popup.CustomDialogFragment
+import com.example.improvedcrypto.files.data.dataclass.CoinResponse
+import com.example.improvedcrypto.files.presenatation.main.popup.CustomDialogFragment
 
 
 class MainFragment : Fragment() {

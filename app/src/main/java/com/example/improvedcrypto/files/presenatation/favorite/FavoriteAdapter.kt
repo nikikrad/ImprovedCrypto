@@ -1,4 +1,4 @@
-package com.example.improvedcrypto.files.favorite
+package com.example.improvedcrypto.files.presenatation.favorite
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentFavoriteBinding
-import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
+import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 
 
 class FavoriteAdapter(
-    private val coinList: List<DatabaseParameters>,
+    private val coinList: List<CoinItem>,
     private val binding: FragmentFavoriteBinding,
     private val favoriteViewModel: FavoriteViewModel,
     private val applicationContext: Context
@@ -49,7 +49,7 @@ class FavoriteAdapter(
         private val description: TextView = itemView.findViewById(R.id.tv_Description)
 
 
-        fun bind(item: DatabaseParameters) {
+        fun bind(item: CoinItem) {
 
             name.text = item.name
             symbols.text = item.symbol

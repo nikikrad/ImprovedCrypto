@@ -1,4 +1,4 @@
-package com.example.improvedcrypto.files.main.description
+package com.example.improvedcrypto.files.presenatation.main.description
 
 import android.view.LayoutInflater
 import android.view.View

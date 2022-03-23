@@ -1,16 +1,16 @@
-package com.example.improvedcrypto.files.favorite
+package com.example.improvedcrypto.files.presenatation.favorite
 
 import androidx.lifecycle.ViewModel
-import com.example.improvedcrypto.files.data.Coin
+import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.CoinDatabase
-import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
+import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.example.improvedcrypto.files.data.repository.CoinRepository
 
 class FavoriteViewModel : ViewModel() {
 
 
-    fun processingCoin(coin: DatabaseParameters): Coin {
-        val processedCoin = Coin(
+    fun processingCoin(coin: CoinItem): CoinEntity {
+        val processedCoin = CoinEntity(
             0,
             coin.nameId,
             coin.symbol,
@@ -23,10 +23,10 @@ class FavoriteViewModel : ViewModel() {
         return processedCoin
     }
 
-    fun getAllData(database: CoinDatabase?): MutableList<DatabaseParameters> {
+    fun getAllData(database: CoinDatabase?): MutableList<CoinItem> {
 
-        var coinList: MutableList<DatabaseParameters> =
-            emptyList<DatabaseParameters>().toMutableList()
+        var coinList: MutableList<CoinItem> =
+            emptyList<CoinItem>().toMutableList()
         val coinDao = database?.CoinDao()
         val coinRepository = coinDao?.let { CoinRepository(it) }
         val coinFromDatabase = coinRepository?.readAllData
@@ -34,7 +34,7 @@ class FavoriteViewModel : ViewModel() {
         if (coinFromDatabase != null) {
             coinFromDatabase.forEach {
                 coinList.add(
-                    DatabaseParameters(
+                    CoinItem(
                         it.nameId,
                         it.symbol,
                         it.name,
@@ -49,10 +49,10 @@ class FavoriteViewModel : ViewModel() {
         return coinList
     }
 
-    suspend fun deleteCoin(coin: Coin, database: CoinDatabase?){
+    suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase?){
         val coinDao = database?.CoinDao()
         if (coinDao != null) {
-            coinDao.deleteCoin(coin.name)
+            coinDao.deleteCoin(coinEntity.name)
         }
     }
 }

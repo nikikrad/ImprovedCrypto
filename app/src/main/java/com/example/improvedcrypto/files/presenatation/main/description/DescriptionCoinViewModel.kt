@@ -1,15 +1,15 @@
-package com.example.improvedcrypto.files.main.description
+package com.example.improvedcrypto.files.presenatation.main.description
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.improvedcrypto.files.api.ApiService
-import com.example.improvedcrypto.files.api.instance.RetrofitInstance
-import com.example.improvedcrypto.files.data.Coin
+import com.example.improvedcrypto.files.domain.ApiService
+import com.example.improvedcrypto.files.domain.instance.RetrofitInstance
+import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.CoinDatabase
-import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
+import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.example.improvedcrypto.files.data.repository.CoinRepository
-import com.example.improvedcrypto.files.main.description.dataclass.ResponseDescription
+import com.example.improvedcrypto.files.presenatation.main.description.dataclass.ResponseDescription
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -44,10 +44,10 @@ class DescriptionCoinViewModel : ViewModel() {
 
     }
 
-    fun getAllData(database: CoinDatabase?): MutableList<DatabaseParameters> {
+    fun getAllData(database: CoinDatabase?): MutableList<CoinItem> {
 
-        var coinList: MutableList<DatabaseParameters> =
-            emptyList<DatabaseParameters>().toMutableList()
+        var coinList: MutableList<CoinItem> =
+            emptyList<CoinItem>().toMutableList()
         val coinDao = database?.CoinDao()
         val coinRepository = coinDao?.let { CoinRepository(it) }
         val coinFromDatabase = coinRepository?.readAllData
@@ -55,7 +55,7 @@ class DescriptionCoinViewModel : ViewModel() {
         if (coinFromDatabase != null) {
             coinFromDatabase.forEach {
                 coinList.add(
-                    DatabaseParameters(
+                    CoinItem(
                         it.nameId,
                         it.symbol,
                         it.name,
@@ -70,26 +70,26 @@ class DescriptionCoinViewModel : ViewModel() {
         return coinList
     }
 
-    fun processingDatabaseResponse(id: String?, coinList: MutableList<DatabaseParameters>): Boolean {
+    fun processingDatabaseResponse(id: String?, coinList: MutableList<CoinItem>): Boolean {
         coinList.forEach {
             if (it.nameId == id) return true
         }
         return false
     }
 
-    suspend fun sendCoinToDatabase(coin: Coin, database: CoinDatabase?) {
+    suspend fun sendCoinToDatabase(coinEntity: CoinEntity, database: CoinDatabase?) {
         val coinDao = database?.CoinDao()
         val coinRepository = coinDao?.let { CoinRepository(it) }
         if (coinRepository != null) {
-            coinRepository.addCoin(coin)
+            coinRepository.addCoin(coinEntity)
         }
     }
 
-    suspend fun deleteCoin(coin: Coin, database: CoinDatabase?){
+    suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase?){
         val coinDao = database?.CoinDao()
             val coinRepository = coinDao?.let { CoinRepository(it) }
         if (coinRepository != null) {
-            coinRepository.deleteCoin(coin)
+            coinRepository.deleteCoin(coinEntity)
         }
     }
 

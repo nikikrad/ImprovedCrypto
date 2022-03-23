@@ -1,4 +1,4 @@
-package com.example.improvedcrypto.files.main
+package com.example.improvedcrypto.files.presenatation.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
-import com.example.improvedcrypto.files.main.dataclass.CoinResponse
+import com.example.improvedcrypto.files.data.dataclass.CoinResponse
 
 class MainAdapter(
     private val coinList: List<CoinResponse>

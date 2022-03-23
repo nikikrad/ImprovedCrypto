@@ -1,4 +1,4 @@
-package com.example.improvedcrypto.files.api.instance
+package com.example.improvedcrypto.files.domain.instance
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

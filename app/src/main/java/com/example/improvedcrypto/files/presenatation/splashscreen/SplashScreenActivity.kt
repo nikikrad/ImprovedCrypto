@@ -1,14 +1,14 @@
-package com.example.improvedcrypto.files.splashscreen
+package com.example.improvedcrypto.files.presenatation.splashscreen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import androidx.lifecycle.lifecycleScope
-import com.example.improvedcrypto.MainActivity
+import com.example.improvedcrypto.files.presenatation.MainActivity
 import com.example.improvedcrypto.R
-import com.example.improvedcrypto.files.api.ApiService
-import com.example.improvedcrypto.files.api.instance.RetrofitInstance
+import com.example.improvedcrypto.files.domain.ApiService
+import com.example.improvedcrypto.files.domain.instance.RetrofitInstance
 import kotlinx.coroutines.launch
 
 class SplashScreenActivity : AppCompatActivity() {

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "coin_table", indices = [Index(value = ["name"], unique = true)])
-class Coin(
+class CoinEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     @ColumnInfo

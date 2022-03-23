@@ -1,4 +1,4 @@
-package com.example.improvedcrypto.files.main.description
+package com.example.improvedcrypto.files.presenatation.main.description
 
 import android.content.res.Resources
 import android.os.Bundle
@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentDescriptionBinding
-import com.example.improvedcrypto.files.data.Coin
+import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.data.CoinDatabase.Companion.getDatabase
-import com.example.improvedcrypto.files.data.dataclass.DatabaseParameters
+import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -75,12 +75,12 @@ class DescriptionCoinFragment : Fragment() {
             binding.rvDescription.adapter = Adapter
 
 
-            val coinList: MutableList<DatabaseParameters> = getAllData()
+            val coinList: MutableList<CoinItem> = getAllData()
             var status: Boolean = descriotionCoinViewModel.processingDatabaseResponse(arguments?.getString("ID"), coinList)
             if(status == true)binding.ibLike.setImageResource(R.drawable.ic_star_rate)
             else binding.ibLike.setImageResource(R.drawable.ic_star_outline)
 
-            val coin = Coin(
+            val coin = CoinEntity(
                 0,
                 it.id,
                 it.symbol,
@@ -115,8 +115,8 @@ class DescriptionCoinFragment : Fragment() {
         })
     }
 
-    fun getAllData(): MutableList<DatabaseParameters>  {
-        var coinList: MutableList<DatabaseParameters> = emptyList<DatabaseParameters>().toMutableList()
+    fun getAllData(): MutableList<CoinItem>  {
+        var coinList: MutableList<CoinItem> = emptyList<CoinItem>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { getDatabase(it) }
             coinList = descriotionCoinViewModel.getAllData(database)
@@ -126,18 +126,18 @@ class DescriptionCoinFragment : Fragment() {
     }
 
 
-    fun insertToDataBase(coin: Coin) {
+    fun insertToDataBase(coinEntity: CoinEntity) {
 
         lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
-            descriotionCoinViewModel.sendCoinToDatabase(coin, database)
+            descriotionCoinViewModel.sendCoinToDatabase(coinEntity, database)
         }
     }
 
-    fun deleteCoin(coin: Coin) {
+    fun deleteCoin(coinEntity: CoinEntity) {
         lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { getDatabase(it) }
-            descriotionCoinViewModel.deleteCoin(coin, database)
+            descriotionCoinViewModel.deleteCoin(coinEntity, database)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.improvedcrypto.files.main.description.dataclass
+package com.example.improvedcrypto.files.presenatation.main.description.dataclass
 
 import com.google.gson.annotations.SerializedName
 
