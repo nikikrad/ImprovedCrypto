@@ -9,3 +9,4 @@ data class DatabaseParameters(
     var currentPrice: Float,
     var changePrice: Float
 )
+

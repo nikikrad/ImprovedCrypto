@@ -1,6 +1,5 @@
 package com.example.improvedcrypto.files.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 
@@ -16,9 +15,4 @@ interface CoinDao {
     @Query("SELECT * FROM coin_table")
     fun readAllData(): List<Coin>
 
-    @Query("SELECT * FROM response_coin_table")
-    fun getAllResponseCoin(): List<ResponseCoinEntity>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addResponseCoin(responseCoin: List<ResponseCoinEntity> )
 }
