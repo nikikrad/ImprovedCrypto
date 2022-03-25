@@ -7,17 +7,21 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.manager.SupportRequestManagerFragment
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentDescriptionBinding
-import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.data.CoinDatabase.Companion.getDatabase
+import com.example.improvedcrypto.files.data.CoinEntity
+import com.example.improvedcrypto.files.presenatation.main.MainFragment
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,8 +80,11 @@ class DescriptionCoinFragment : Fragment() {
 
 
             val coinList: MutableList<CoinItem> = getAllData()
-            var status: Boolean = descriotionCoinViewModel.processingDatabaseResponse(arguments?.getString("ID"), coinList)
-            if(status == true)binding.ibLike.setImageResource(R.drawable.ic_star_rate)
+            var status: Boolean = descriotionCoinViewModel.processingDatabaseResponse(
+                arguments?.getString("ID"),
+                coinList
+            )
+            if (status == true) binding.ibLike.setImageResource(R.drawable.ic_star_rate)
             else binding.ibLike.setImageResource(R.drawable.ic_star_outline)
 
             val coin = CoinEntity(
@@ -92,21 +99,30 @@ class DescriptionCoinFragment : Fragment() {
             )
 
             binding.ibLike.setOnClickListener {
-                if(status == true){
+                if (status == true) {
                     deleteCoin(coin)
                     binding.ibLike.setImageResource(R.drawable.ic_star_outline)
-                    Toast.makeText(context, coin.name + " is successfully deleted!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        coin.name + " is successfully deleted!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     status = false
-                }else{
+                } else {
                     insertToDataBase(coin)
                     binding.ibLike.setImageResource(R.drawable.ic_star_rate)
-                    Toast.makeText(context, coin.name + " is successfully added!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        coin.name + " is successfully added!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     status = true
                 }
 
             }
 
-            val clickAnimation: Animation = AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.click_alpha)
+            val clickAnimation: Animation =
+                AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.click_alpha)
             binding.btnBack.setOnClickListener {
                 binding.btnBack.startAnimation(clickAnimation)
                 Navigation.findNavController(view)
@@ -115,7 +131,7 @@ class DescriptionCoinFragment : Fragment() {
         })
     }
 
-    fun getAllData(): MutableList<CoinItem>  {
+    fun getAllData(): MutableList<CoinItem> {
         var coinList: MutableList<CoinItem> = emptyList<CoinItem>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { getDatabase(it) }

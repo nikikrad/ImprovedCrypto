@@ -9,6 +9,7 @@ import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.example.improvedcrypto.files.data.repository.CoinRepository
+import com.example.improvedcrypto.files.data.toCoinItem
 import com.example.improvedcrypto.files.presenatation.main.description.dataclass.ResponseDescription
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -55,15 +56,7 @@ class DescriptionCoinViewModel : ViewModel() {
         if (coinFromDatabase != null) {
             coinFromDatabase.forEach {
                 coinList.add(
-                    CoinItem(
-                        it.nameId,
-                        it.symbol,
-                        it.name,
-                        it.image,
-                        it.description,
-                        it.currentPrice,
-                        it.changePrice
-                    )
+                    it.toCoinItem()
                 )
             }
         }
@@ -85,9 +78,9 @@ class DescriptionCoinViewModel : ViewModel() {
         }
     }
 
-    suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase?){
+    suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase?) {
         val coinDao = database?.CoinDao()
-            val coinRepository = coinDao?.let { CoinRepository(it) }
+        val coinRepository = coinDao?.let { CoinRepository(it) }
         if (coinRepository != null) {
             coinRepository.deleteCoin(coinEntity)
         }

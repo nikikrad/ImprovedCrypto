@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 
 
 @Entity(tableName = "coin_table", indices = [Index(value = ["name"], unique = true)])
@@ -25,3 +26,15 @@ class CoinEntity(
     @ColumnInfo
     var changePrice: Float = 0f
 )
+
+fun CoinEntity.toCoinItem(): CoinItem {
+    return CoinItem(
+        nameId = nameId,
+        symbol = symbol,
+        name = name,
+        image = image,
+        description = description,
+        currentPrice = currentPrice,
+        changePrice = changePrice
+    )
+}

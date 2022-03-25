@@ -5,21 +5,14 @@ import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.example.improvedcrypto.files.data.repository.CoinRepository
+import com.example.improvedcrypto.files.data.toCoinItem
+import com.example.improvedcrypto.files.presenatation.main.dataclass.toCoinEntity
 
 class FavoriteViewModel : ViewModel() {
 
 
     fun processingCoin(coin: CoinItem): CoinEntity {
-        val processedCoin = CoinEntity(
-            0,
-            coin.nameId,
-            coin.symbol,
-            coin.name,
-            coin.image,
-            coin.description,
-            coin.currentPrice,
-            coin.changePrice
-        )
+        val processedCoin = coin.toCoinEntity()
         return processedCoin
     }
 
@@ -33,17 +26,7 @@ class FavoriteViewModel : ViewModel() {
 
         if (coinFromDatabase != null) {
             coinFromDatabase.forEach {
-                coinList.add(
-                    CoinItem(
-                        it.nameId,
-                        it.symbol,
-                        it.name,
-                        it.image,
-                        it.description,
-                        it.currentPrice,
-                        it.changePrice
-                    )
-                )
+                coinList.add(it.toCoinItem())
             }
         }
         return coinList
