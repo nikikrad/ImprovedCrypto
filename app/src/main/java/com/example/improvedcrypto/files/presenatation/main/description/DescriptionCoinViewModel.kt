@@ -11,6 +11,7 @@ import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.example.improvedcrypto.files.data.repository.CoinRepository
 import com.example.improvedcrypto.files.data.toCoinItem
 import com.example.improvedcrypto.files.presenatation.main.description.dataclass.ResponseDescription
+import com.example.improvedcrypto.files.presenatation.main.description.repository.DescriptionRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -20,12 +21,10 @@ class DescriptionCoinViewModel : ViewModel() {
 
     fun getDescriptionResponse(id: String) {
 
-        val retrofit = RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
-
         viewModelScope.launch {
             runBlocking {
-                val getDescription = retrofit.getDescription(id)
-                val bodyDescription = getDescription.body()
+                val descriptionRepository = DescriptionRepository()
+                val bodyDescription = descriptionRepository.getCoin(id)
 
                 if (bodyDescription != null) {
                     liveData.postValue(
