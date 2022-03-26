@@ -7,14 +7,28 @@
     tools:context=".files.presenatation.splashscreen.SplashScreenActivity"
     android:background="@color/maingreen">
 
+
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/startGif"
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/startgif"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <ImageView
+        android:id="@+id/iv_CoinGecoin"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_marginBottom="140dp"
+        android:src="@drawable/ic_coingecko"
+        android:layout_marginTop="170dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="150dp"
-        android:src="@drawable/ic_coingecko"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
