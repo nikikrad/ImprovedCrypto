@@ -1,6 +1,8 @@
 package com.example.improvedcrypto.files.presenatation.main
 
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -45,14 +47,35 @@ class MainFragment : Fragment() {
 
     private fun adapter() {
 
-//        val bundle = Bundle()
+        val bundle = Bundle()
 //        bundle.getSerializable("COIN")
 
+//        mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
+//        })
+
+//        val array: ArrayList<CoinResponse> = bundle.getSerializable("COIN") as ArrayList<CoinResponse>
+
+        responseBody.clear()
+//        val array: ArrayList<CoinResponse> = bundle.getParcelableArrayList<Parcelable>("COIN") as ArrayList<CoinResponse>
+
+//        val Adapter = MainAdapter(array)
+//        binding.rvCoins.layoutManager =
+//            LinearLayoutManager(
+//                activity?.applicationContext,
+//                LinearLayoutManager.VERTICAL,
+//                false
+//            )
+//        binding.rvCoins.adapter = Adapter
+
+//        Log.e("KEK", array.toString())
         mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
-            responseBody.clear()
             val Adapter = MainAdapter(it)
             binding.rvCoins.layoutManager =
-                LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(
+                    activity?.applicationContext,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             binding.rvCoins.adapter = Adapter
         })
 

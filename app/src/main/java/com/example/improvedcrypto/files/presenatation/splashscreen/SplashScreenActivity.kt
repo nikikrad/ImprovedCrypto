@@ -11,6 +11,7 @@ import com.example.improvedcrypto.files.data.dataclass.CoinResponse
 import com.example.improvedcrypto.files.domain.ApiService
 import com.example.improvedcrypto.files.domain.instance.RetrofitInstance
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
@@ -22,14 +23,19 @@ class SplashScreenActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         Handler().postDelayed({
-            val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
-            startActivity(intent)
+            val bundle = Bundle()
+
             val retrofit = RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
             lifecycleScope.launch {
-                val getGecon = retrofit.getCrypto()
-                val bodyGecon = getGecon.body()
-                savedInstanceState?.putSerializable("COIN", bodyGecon)
+                runBlocking {
+                    val getGecon = retrofit.getCrypto()
+                    val bodyGecon = getGecon.body()
+                    bundle.putParcelableArrayList("COIN", bodyGecon)
+                }
             }
+
+            val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+            startActivity(intent, bundle)
 
             finish()
         }, 500)
