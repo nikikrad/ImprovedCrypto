@@ -32,7 +32,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 }
@@ -45,7 +45,8 @@ dependencies {
 
     //requests
     implementation "com.squareup.retrofit2:retrofit:2.9.0" //Retrofit для REST API
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.1' //Для ретрофита, чтобы преобразовывать Json -> Объект
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    //Для ретрофита, чтобы преобразовывать Json -> Объект
     implementation "com.google.code.gson:gson:2.8.7" //чтобы преобразовывать Json -> Объект
     implementation "com.squareup.okhttp3:logging-interceptor:3.14.1" //для логов в ретрофите
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
@@ -73,7 +74,7 @@ dependencies {
     //ViewModel
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
-    implementation"androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
 
     //pullToRefresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"

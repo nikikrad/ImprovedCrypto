@@ -28,15 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 val getGecon = retrofit.getCrypto()
                 val bodyGecon = getGecon.body()
-
-
-//                val bundle = Bundle()
-//                savedInstanceState?.putSerializable("COIN", bodyGecon)
-
-
-//                val queue: Queue<List<CoinResponse>> = LinkedBlockingQueue()
-//                savedInstanceState?.putSerializable("COIN", queue)
-
+                savedInstanceState?.putSerializable("COIN", bodyGecon)
             }
 
             finish()

@@ -45,6 +45,9 @@ class MainFragment : Fragment() {
 
     private fun adapter() {
 
+//        val bundle = Bundle()
+//        bundle.getSerializable("COIN")
+
         mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
             responseBody.clear()
             val Adapter = MainAdapter(it)
