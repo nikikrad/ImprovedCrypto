@@ -3,12 +3,10 @@ package com.example.improvedcrypto.files.presenatation.main.description
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.improvedcrypto.files.domain.ApiService
-import com.example.improvedcrypto.files.domain.instance.RetrofitInstance
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
-import com.example.improvedcrypto.files.data.repository.CoinRepository
+import com.example.improvedcrypto.files.presenatation.favorite.repository.FavoriteRepository
 import com.example.improvedcrypto.files.data.toCoinItem
 import com.example.improvedcrypto.files.presenatation.main.description.dataclass.ResponseDescription
 import com.example.improvedcrypto.files.presenatation.main.description.repository.DescriptionRepository
@@ -49,7 +47,7 @@ class DescriptionCoinViewModel : ViewModel() {
         var coinList: MutableList<CoinItem> =
             emptyList<CoinItem>().toMutableList()
         val coinDao = database?.CoinDao()
-        val coinRepository = coinDao?.let { CoinRepository(it) }
+        val coinRepository = coinDao?.let { FavoriteRepository(it) }
         val coinFromDatabase = coinRepository?.readAllData
 
         if (coinFromDatabase != null) {
@@ -71,7 +69,7 @@ class DescriptionCoinViewModel : ViewModel() {
 
     suspend fun sendCoinToDatabase(coinEntity: CoinEntity, database: CoinDatabase?) {
         val coinDao = database?.CoinDao()
-        val coinRepository = coinDao?.let { CoinRepository(it) }
+        val coinRepository = coinDao?.let { FavoriteRepository(it) }
         if (coinRepository != null) {
             coinRepository.addCoin(coinEntity)
         }
@@ -79,7 +77,7 @@ class DescriptionCoinViewModel : ViewModel() {
 
     suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase?) {
         val coinDao = database?.CoinDao()
-        val coinRepository = coinDao?.let { CoinRepository(it) }
+        val coinRepository = coinDao?.let { FavoriteRepository(it) }
         if (coinRepository != null) {
             coinRepository.deleteCoin(coinEntity)
         }

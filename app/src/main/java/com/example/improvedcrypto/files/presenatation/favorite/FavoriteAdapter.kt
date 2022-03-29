@@ -18,7 +18,6 @@ class FavoriteAdapter(
     private val binding: FragmentFavoriteBinding,
     private val favoriteViewModel: FavoriteViewModel,
     private val applicationContext: Context
-
 ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(

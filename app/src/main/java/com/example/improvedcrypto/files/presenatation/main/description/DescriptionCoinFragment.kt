@@ -25,6 +25,7 @@ import com.example.improvedcrypto.files.presenatation.main.MainFragment
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class DescriptionCoinFragment : Fragment() {
 
@@ -134,16 +135,16 @@ class DescriptionCoinFragment : Fragment() {
     fun getAllData(): MutableList<CoinItem> {
         var coinList: MutableList<CoinItem> = emptyList<CoinItem>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
-            val database = activity?.applicationContext?.let { getDatabase(it) }
-            coinList = descriotionCoinViewModel.getAllData(database)
+            runBlocking {
+                val database = activity?.applicationContext?.let { getDatabase(it) }
+                coinList = descriotionCoinViewModel.getAllData(database)
+            }
         }
-        Thread.sleep(100)
         return coinList
     }
 
 
     fun insertToDataBase(coinEntity: CoinEntity) {
-
         lifecycleScope.launch(Dispatchers.IO) {
             val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
             descriotionCoinViewModel.sendCoinToDatabase(coinEntity, database)

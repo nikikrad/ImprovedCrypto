@@ -4,24 +4,29 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import android.view.*
+import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.databinding.FragmentMainBinding
 import com.example.improvedcrypto.files.data.dataclass.CoinResponse
 import com.example.improvedcrypto.files.presenatation.main.popup.CustomDialogFragment
+import com.example.improvedcrypto.files.presenatation.main.repository.MainRepository
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 
 class MainFragment : Fragment() {
 
     lateinit var binding: FragmentMainBinding
-    lateinit var mainViewModel: MainViewModel
+    private val mainViewModel: MainViewModel by inject()
     var responseBody: MutableList<CoinResponse> = emptyList<CoinResponse>().toMutableList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+//        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -43,6 +48,8 @@ class MainFragment : Fragment() {
             val dialog = CustomDialogFragment()
             dialog.show(childFragmentManager, "qwe")
         }
+
+//        val mainRepository = get<MainRepository>()
     }
 
     private fun adapter() {
@@ -55,7 +62,6 @@ class MainFragment : Fragment() {
 
 //        val array: ArrayList<CoinResponse> = bundle.getSerializable("COIN") as ArrayList<CoinResponse>
 
-        responseBody.clear()
 //        val array: ArrayList<CoinResponse> = bundle.getParcelableArrayList<Parcelable>("COIN") as ArrayList<CoinResponse>
 
 //        val Adapter = MainAdapter(array)
@@ -68,6 +74,8 @@ class MainFragment : Fragment() {
 //        binding.rvCoins.adapter = Adapter
 
 //        Log.e("KEK", array.toString())
+
+        responseBody.clear()
         mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
             val Adapter = MainAdapter(it)
             binding.rvCoins.layoutManager =

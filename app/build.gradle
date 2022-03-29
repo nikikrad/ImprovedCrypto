@@ -81,4 +81,8 @@ dependencies {
 
     //gifImage
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
+
+    //Koin - DI
+    implementation "org.koin:koin-androidx-viewmodel:2.0.1"
+    implementation "org.koin:koin-android:2.0.1"
 }

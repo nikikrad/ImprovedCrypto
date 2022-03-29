@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
-import com.example.improvedcrypto.files.data.repository.CoinRepository
+import com.example.improvedcrypto.files.presenatation.favorite.repository.FavoriteRepository
 import com.example.improvedcrypto.files.data.toCoinItem
 import com.example.improvedcrypto.files.presenatation.main.dataclass.toCoinEntity
 
@@ -21,7 +21,7 @@ class FavoriteViewModel : ViewModel() {
         var coinList: MutableList<CoinItem> =
             emptyList<CoinItem>().toMutableList()
         val coinDao = database?.CoinDao()
-        val coinRepository = coinDao?.let { CoinRepository(it) }
+        val coinRepository = coinDao?.let { FavoriteRepository(it) }
         val coinFromDatabase = coinRepository?.readAllData
 
         if (coinFromDatabase != null) {
@@ -34,8 +34,6 @@ class FavoriteViewModel : ViewModel() {
 
     suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase?){
         val coinDao = database?.CoinDao()
-        if (coinDao != null) {
-            coinDao.deleteCoin(coinEntity.name)
-        }
+        coinDao?.deleteCoin(coinEntity.name)
     }
 }

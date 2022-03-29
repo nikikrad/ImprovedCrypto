@@ -8,6 +8,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.ActivityMainBinding
+import com.example.improvedcrypto.files.presenatation.main.repository.MainRepository
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+
 
         setContentView(binding.root)
         val navHostFragment =
