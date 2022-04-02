@@ -26,7 +26,6 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -48,8 +47,6 @@ class MainFragment : Fragment() {
             val dialog = CustomDialogFragment()
             dialog.show(childFragmentManager, "qwe")
         }
-
-//        val mainRepository = get<MainRepository>()
     }
 
     private fun adapter() {

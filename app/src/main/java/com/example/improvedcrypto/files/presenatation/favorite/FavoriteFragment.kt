@@ -56,10 +56,10 @@ class FavoriteFragment : Fragment() {
         val isEmpty = getAllData()
         if(isEmpty.size == 0){
             binding.tvNoCoin.visibility = View.VISIBLE
-            binding.vRoundedNoCoin.visibility = View.VISIBLE
+//            binding.vRoundedNoCoin.visibility = View.VISIBLE
         }else{
             binding.tvNoCoin.visibility = View.INVISIBLE
-            binding.vRoundedNoCoin.visibility = View.INVISIBLE
+//            binding.vRoundedNoCoin.visibility = View.INVISIBLE
         }
         val Adapter = activity?.let {
             FavoriteAdapter(

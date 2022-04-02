@@ -26,16 +26,16 @@ import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.inject
 
 class DescriptionCoinFragment : Fragment() {
 
 
     lateinit var binding: FragmentDescriptionBinding
-    lateinit var descriotionCoinViewModel: DescriptionCoinViewModel
+    private val descriotionCoinViewModel: DescriptionCoinViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        descriotionCoinViewModel = ViewModelProvider(this)[DescriptionCoinViewModel::class.java]
         arguments?.getString("ID")?.let { descriotionCoinViewModel.getDescriptionResponse(it) }
     }
 
@@ -79,10 +79,11 @@ class DescriptionCoinFragment : Fragment() {
                 )
             binding.rvDescription.adapter = Adapter
 
+            val temp = arguments?.getString("ID")
 
             val coinList: MutableList<CoinItem> = getAllData()
             var status: Boolean = descriotionCoinViewModel.processingDatabaseResponse(
-                arguments?.getString("ID"),
+               arguments?.getString("ID"),
                 coinList
             )
             if (status == true) binding.ibLike.setImageResource(R.drawable.ic_star_rate)
@@ -140,6 +141,7 @@ class DescriptionCoinFragment : Fragment() {
                 coinList = descriotionCoinViewModel.getAllData(database)
             }
         }
+        Thread.sleep(100)
         return coinList
     }
 
