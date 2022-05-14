@@ -14,9 +14,7 @@ class MainViewModel(private val mainRepository: MainRepository): ViewModel() {
 
     fun getResponse(){
         viewModelScope.launch {
-            runBlocking {
                 liveData.postValue(mainRepository.getCoin())
-            }
         }
     }
 

@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import androidx.annotation.MainThread
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -51,7 +52,7 @@ class MainFragment : Fragment() {
 
     private fun adapter() {
 
-        val bundle = Bundle()
+//        val bundle = Bundle()
 //        bundle.getSerializable("COIN")
 
 //        mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
@@ -74,6 +75,9 @@ class MainFragment : Fragment() {
 
         responseBody.clear()
         mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty())
+                binding.pbProgressBar.isVisible = true
+            else binding.pbProgressBar.isVisible = false
             val Adapter = MainAdapter(it)
             binding.rvCoins.layoutManager =
                 LinearLayoutManager(

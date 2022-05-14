@@ -27,11 +27,9 @@ class SplashScreenActivity : AppCompatActivity() {
 
             val retrofit = RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
             lifecycleScope.launch {
-                runBlocking {
                     val getGecon = retrofit.getCrypto()
                     val bodyGecon = getGecon.body()
                     bundle.putParcelableArrayList("COIN", bodyGecon)
-                }
             }
 
             val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
