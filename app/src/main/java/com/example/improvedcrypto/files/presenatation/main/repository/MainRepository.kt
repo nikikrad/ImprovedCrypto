@@ -10,6 +10,9 @@ class MainRepository() {
     suspend fun getCoin(): List<CoinResponse>? {
         val retrofit = RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
         val getGecon = retrofit.getCrypto()
-        return getGecon.body()
+        if(getGecon.isSuccessful)
+            return getGecon.body()
+        else return null
+
     }
 }

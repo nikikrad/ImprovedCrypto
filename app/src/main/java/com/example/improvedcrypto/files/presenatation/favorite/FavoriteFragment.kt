@@ -54,10 +54,10 @@ class FavoriteFragment : Fragment() {
 
     private fun adapter(binding: FragmentFavoriteBinding) {
         val isEmpty = getAllData()
-        if(isEmpty.size == 0){
+        if (isEmpty.size == 0) {
             binding.tvNoCoin.visibility = View.VISIBLE
 //            binding.vRoundedNoCoin.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.tvNoCoin.visibility = View.INVISIBLE
 //            binding.vRoundedNoCoin.visibility = View.INVISIBLE
         }
@@ -98,7 +98,11 @@ class FavoriteFragment : Fragment() {
         return database
     }
 
-    fun deleteCoin(coinEntity: CoinEntity, favoriteViewModel: FavoriteViewModel, applicationContext: Context) {
+    fun deleteCoin(
+        coinEntity: CoinEntity,
+        favoriteViewModel: FavoriteViewModel,
+        applicationContext: Context
+    ) {
         lifecycleScope.launch(Dispatchers.IO) {
             val database = getDatabase(applicationContext)
             favoriteViewModel.deleteCoin(coinEntity, database)

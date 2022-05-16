@@ -8,7 +8,7 @@ import com.example.improvedcrypto.files.presenatation.favorite.repository.Favori
 import com.example.improvedcrypto.files.data.toCoinItem
 import com.example.improvedcrypto.files.presenatation.main.dataclass.toCoinEntity
 
-class FavoriteViewModel : ViewModel() {
+class FavoriteViewModel() : ViewModel() {
 
 
     fun processingCoin(coin: CoinItem): CoinEntity {

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/hide_background">
+
+    <View
+        android:id="@+id/v_Main"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rounded_rectangle_bordovy"/>
+
+    <TextView
+        android:id="@+id/img_Wifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wifi_off"
+        app:layout_constraintEnd_toEndOf="@+id/v_Main"
+        app:layout_constraintStart_toStartOf="@+id/v_Main"
+        app:layout_constraintTop_toTopOf="@+id/v_Main"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/tv_Connection"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/img_Wifi"
+        app:layout_constraintStart_toStartOf="@+id/img_Wifi"
+        app:layout_constraintTop_toBottomOf="@+id/img_Wifi"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inconsolata_regular"
+        android:text="You don't have Internet Connection!!"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_Retry"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_Connection"
+        app:layout_constraintStart_toStartOf="@+id/tv_Connection"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Connection"
+        android:background="@drawable/rounded_black_rectangle"
+        android:textColor="@color/white"
+        android:fontFamily="@font/inconsolata_bold"
+        android:text="retry"
+        android:layout_marginTop="15dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
