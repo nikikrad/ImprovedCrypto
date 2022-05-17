@@ -13,14 +13,15 @@ import com.example.improvedcrypto.files.presenatation.main.description.repositor
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class DescriptionCoinViewModel(private val descriptionRepository: DescriptionRepository) : ViewModel() {
+class DescriptionCoinViewModel(private val descriptionRepository: DescriptionRepository) :
+    ViewModel() {
 
     var liveData: MutableLiveData<ResponseDescription> = MutableLiveData()
 
     fun getDescriptionResponse(id: String) {
 
         viewModelScope.launch {
-            runBlocking {
+            try {
                 val bodyDescription = descriptionRepository.getCoin(id)
 
                 if (bodyDescription != null) {
@@ -35,7 +36,11 @@ class DescriptionCoinViewModel(private val descriptionRepository: DescriptionRep
                         )
                     )
                 }
+            }catch (e: Exception){
+
             }
+
+
 
         }
 

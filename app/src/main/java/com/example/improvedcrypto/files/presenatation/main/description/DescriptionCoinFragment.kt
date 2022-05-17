@@ -6,6 +6,7 @@ import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -23,6 +24,7 @@ import com.example.improvedcrypto.files.data.CoinDatabase.Companion.getDatabase
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.presenatation.main.MainFragment
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
+import com.example.improvedcrypto.files.presenatation.main.dialogs.internetconnection.InternetConnectionDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -49,7 +51,12 @@ class DescriptionCoinFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+
         descriotionCoinViewModel.liveData.observe(viewLifecycleOwner, Observer {
+
+            binding.pbProgressBar.isVisible = it.name.isEmpty()
+
+
 
             Glide.with(view)
                 .load(it.image.large)
@@ -158,6 +165,11 @@ class DescriptionCoinFragment : Fragment() {
             val database = activity?.applicationContext?.let { getDatabase(it) }
             descriotionCoinViewModel.deleteCoin(coinEntity, database)
         }
+    }
+
+    private fun noInternetConnection(){
+        val dialogFragment = InternetConnectionDialogFragment()
+        dialogFragment.show(childFragmentManager, "Hello")
     }
 
 

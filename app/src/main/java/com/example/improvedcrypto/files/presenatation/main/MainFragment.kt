@@ -49,23 +49,27 @@ class MainFragment : Fragment() {
 
     private fun adapter() {
 
-        var bundle = Bundle()
-        var nikita = bundle.getParcelableArrayList<Parcelable>("COIN")
-        var oleg = arguments?.getParcelableArrayList<Parcelable>("COIN")
+//        var bundle = Bundle()
+//        var nikita = bundle.getParcelableArrayList<Parcelable>("COIN")
+//        var oleg = arguments?.getParcelableArrayList<Parcelable>("COIN")
 
-         responseBody.clear()
-            mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
-                binding.pbProgressBar.isVisible = it.isEmpty()
-                val Adapter = MainAdapter(it)
-                binding.rvCoins.layoutManager =
-                    LinearLayoutManager(
-                        activity?.applicationContext,
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
-                binding.rvCoins.adapter = Adapter
-            })
+        mainViewModel.liveDataBoolean.observe(viewLifecycleOwner, Observer{
+            if(it == true)
+                noInternetConnection()
+        })
 
+        responseBody.clear()
+        mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
+            binding.pbProgressBar.isVisible = it.isEmpty()
+            val Adapter = MainAdapter(it)
+            binding.rvCoins.layoutManager =
+                LinearLayoutManager(
+                    activity?.applicationContext,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            binding.rvCoins.adapter = Adapter
+        })
 
 
     }
@@ -76,7 +80,7 @@ class MainFragment : Fragment() {
         adapter()
     }
 
-    fun noInternetConnection(){
+    fun noInternetConnection() {
         val dialogFragment = InternetConnectionDialogFragment()
         dialogFragment.show(childFragmentManager, "Hello")
     }

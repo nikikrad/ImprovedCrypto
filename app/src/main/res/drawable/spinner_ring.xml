@@ -13,9 +13,9 @@
             android:width="18dip" />
 
         <gradient
-            android:centerColor="#A7FB45"
+            android:centerColor="#4D682E"
             android:centerY="0.50"
-            android:endColor="@color/green"
+            android:endColor="#8BC34A"
             android:startColor="#00E9F6EA"
             android:type="sweep"
             android:useLevel="false" />

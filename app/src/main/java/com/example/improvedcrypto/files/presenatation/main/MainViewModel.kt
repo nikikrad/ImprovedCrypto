@@ -13,14 +13,15 @@ import kotlinx.coroutines.runBlocking
 class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     val liveData: MutableLiveData<List<CoinResponse>> = MutableLiveData()
+    val liveDataBoolean: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getResponse() {
         viewModelScope.launch {
             try {
                 liveData.postValue(mainRepository.getCoin())
+                liveDataBoolean.postValue(false)
             }catch (e: Exception){
-                val mainFragment = MainFragment()
-                mainFragment.noInternetConnection()
+                liveDataBoolean.postValue(true)
             }
         }
     }

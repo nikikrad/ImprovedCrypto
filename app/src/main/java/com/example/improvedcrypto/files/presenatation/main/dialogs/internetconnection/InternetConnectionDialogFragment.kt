@@ -32,9 +32,8 @@ class InternetConnectionDialogFragment: DialogFragment(){
             internetConnectionDialogViewModel.liveData.observe(viewLifecycleOwner, Observer{
                 if(it == true){
                     dismiss()
-                }else{
-
                 }
+//                dismiss()
             })
         }
 

@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+
     <View
         android:id="@+id/v_Toolbar"
         android:layout_width="match_parent"
@@ -75,7 +76,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/inconsolata_bold"
-        android:hint="Bitcoin"
         android:textColor="@color/black"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/v_Main"
@@ -97,7 +97,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inconsolata_regular"
-        android:hint="Binance USD"
         android:textColor="#595959"
         android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
@@ -110,7 +109,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/inconsolata_regular"
-        android:text="Price: "
         app:layout_constraintStart_toStartOf="@+id/tv_Symbol"
         app:layout_constraintTop_toBottomOf="@+id/tv_Symbol" />
 
@@ -119,7 +117,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="999999"
         android:fontFamily="@font/inconsolata_regular"
         app:layout_constraintStart_toEndOf="@+id/tv_StaticPrice"
         app:layout_constraintTop_toBottomOf="@+id/tv_Symbol"/>
@@ -130,7 +127,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="10sp"
-        android:text="Price change: "
         app:layout_constraintTop_toBottomOf="@+id/tv_StaticPrice"
         app:layout_constraintStart_toStartOf="@+id/tv_StaticPrice"
         android:layout_marginTop="5dp"
@@ -142,7 +138,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="10sp"
-        android:hint="999999999"
         android:fontFamily="@font/inconsolata_regular"
         app:layout_constraintTop_toBottomOf="@+id/tv_Price"
         app:layout_constraintStart_toEndOf="@+id/tv_Change"/>
@@ -170,5 +165,15 @@
         app:layout_constraintEnd_toEndOf="@+id/v_Secondary"
         app:layout_constraintStart_toStartOf="@+id/v_Secondary"
         app:layout_constraintTop_toBottomOf="@+id/tv_StaticDescription" />
+
+    <ProgressBar
+        android:id="@+id/pb_ProgressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toTopOf="@+id/v_Secondary"
+        app:layout_constraintEnd_toEndOf="@+id/v_Secondary"
+        app:layout_constraintStart_toStartOf="@+id/v_Secondary"
+        app:layout_constraintBottom_toBottomOf="@+id/v_Secondary"
+        android:indeterminateDrawable="@drawable/spinner_ring"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
