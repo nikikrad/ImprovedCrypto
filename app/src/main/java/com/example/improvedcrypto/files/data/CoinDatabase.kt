@@ -29,8 +29,6 @@ abstract class CoinDatabase : RoomDatabase() {
                 INSTANCE = instance
                 return instance
             }
-
         }
-
     }
 }

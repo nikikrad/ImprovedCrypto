@@ -15,16 +15,16 @@ import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 
 class FavoriteFragment : Fragment() {
 
     lateinit var binding: FragmentFavoriteBinding
-    lateinit var favoriteViewModel: FavoriteViewModel
+    private val favoriteViewModel: FavoriteViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        favoriteViewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -41,6 +41,7 @@ class FavoriteFragment : Fragment() {
         refreshApp(binding)
     }
 
+
     fun getAllData(): MutableList<CoinItem> {
         var coinList: MutableList<CoinItem> =
             emptyList<CoinItem>().toMutableList()
@@ -56,10 +57,8 @@ class FavoriteFragment : Fragment() {
         val isEmpty = getAllData()
         if (isEmpty.size == 0) {
             binding.tvNoCoin.visibility = View.VISIBLE
-//            binding.vRoundedNoCoin.visibility = View.VISIBLE
         } else {
             binding.tvNoCoin.visibility = View.INVISIBLE
-//            binding.vRoundedNoCoin.visibility = View.INVISIBLE
         }
         val Adapter = activity?.let {
             FavoriteAdapter(

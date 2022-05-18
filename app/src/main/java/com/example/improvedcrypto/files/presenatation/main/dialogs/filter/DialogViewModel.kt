@@ -24,7 +24,5 @@ class DialogViewModel: ViewModel() {
                 liveData.postValue(bodyGecon)
             }
         }
-
     }
-
 }

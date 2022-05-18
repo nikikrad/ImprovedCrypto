@@ -36,32 +36,13 @@ class DescriptionCoinViewModel(private val descriptionRepository: DescriptionRep
                         )
                     )
                 }
-            }catch (e: Exception){
-
-            }
-
-
-
+            }catch (e: Exception){}
         }
-
     }
 
     fun getAllData(database: CoinDatabase?): MutableList<CoinItem> {
 
-        var coinList: MutableList<CoinItem> =
-            emptyList<CoinItem>().toMutableList()
-        val coinDao = database?.CoinDao()
-        val coinRepository = coinDao?.let { FavoriteRepository(it) }
-        val coinFromDatabase = coinRepository?.readAllData
-
-        if (coinFromDatabase != null) {
-            coinFromDatabase.forEach {
-                coinList.add(
-                    it.toCoinItem()
-                )
-            }
-        }
-        return coinList
+       return descriptionRepository.checkCoinsFromDatabase(database!!)
     }
 
     fun processingDatabaseResponse(id: String?, coinList: MutableList<CoinItem>): Boolean {
@@ -72,19 +53,11 @@ class DescriptionCoinViewModel(private val descriptionRepository: DescriptionRep
     }
 
     suspend fun sendCoinToDatabase(coinEntity: CoinEntity, database: CoinDatabase?) {
-        val coinDao = database?.CoinDao()
-        val coinRepository = coinDao?.let { FavoriteRepository(it) }
-        if (coinRepository != null) {
-            coinRepository.addCoin(coinEntity)
-        }
+        descriptionRepository.sendCoinToDatabase(coinEntity, database!!)
     }
 
     suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase?) {
-        val coinDao = database?.CoinDao()
-        val coinRepository = coinDao?.let { FavoriteRepository(it) }
-        if (coinRepository != null) {
-            coinRepository.deleteCoin(coinEntity)
-        }
+        descriptionRepository.deleteCoin(coinEntity, database!!)
     }
 
     override fun onCleared() {

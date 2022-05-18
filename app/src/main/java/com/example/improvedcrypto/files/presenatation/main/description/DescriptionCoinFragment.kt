@@ -56,8 +56,6 @@ class DescriptionCoinFragment : Fragment() {
 
             binding.pbProgressBar.isVisible = it.name.isEmpty()
 
-
-
             Glide.with(view)
                 .load(it.image.large)
                 .placeholder(R.drawable.ic_no_image)
