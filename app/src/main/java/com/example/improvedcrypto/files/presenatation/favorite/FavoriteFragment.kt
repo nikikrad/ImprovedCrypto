@@ -22,6 +22,7 @@ class FavoriteFragment : Fragment() {
 
     lateinit var binding: FragmentFavoriteBinding
     private val favoriteViewModel: FavoriteViewModel by inject()
+    val database: CoinDatabase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +47,8 @@ class FavoriteFragment : Fragment() {
         var coinList: MutableList<CoinItem> =
             emptyList<CoinItem>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
-            val database = activity?.applicationContext?.let { getDatabase(it) }
-            coinList = favoriteViewModel.getAllData(database)
+//            database = activity?.applicationContext?.let { getDatabase(it) }
+            coinList = favoriteViewModel.getAllData()
         }
         Thread.sleep(100)
         return coinList
@@ -103,8 +104,8 @@ class FavoriteFragment : Fragment() {
         applicationContext: Context
     ) {
         lifecycleScope.launch(Dispatchers.IO) {
-            val database = getDatabase(applicationContext)
-            favoriteViewModel.deleteCoin(coinEntity, database)
+//            val database = getDatabase(applicationContext)
+            favoriteViewModel.deleteCoin(coinEntity)
         }
     }
 
