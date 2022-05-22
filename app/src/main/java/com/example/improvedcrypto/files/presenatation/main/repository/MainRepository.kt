@@ -5,14 +5,9 @@ import com.example.improvedcrypto.files.domain.ApiService
 import com.example.improvedcrypto.files.domain.instance.RetrofitInstance
 import retrofit2.Response
 
-class MainRepository() {
+class MainRepository(private val retrofit: ApiService) {
 
     suspend fun getCoin(): List<CoinResponse>? {
-        val retrofit = RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
-        val getGecon = retrofit.getCrypto()
-        if(getGecon.isSuccessful)
-            return getGecon.body()
-        else return null
-
+        return retrofit.getCrypto().body()
     }
 }

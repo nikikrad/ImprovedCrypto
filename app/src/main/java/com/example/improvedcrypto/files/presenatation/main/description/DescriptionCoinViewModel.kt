@@ -4,17 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.improvedcrypto.files.data.CoinEntity
-import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
-import com.example.improvedcrypto.files.presenatation.favorite.repository.FavoriteRepository
-import com.example.improvedcrypto.files.data.toCoinItem
 import com.example.improvedcrypto.files.presenatation.main.description.dataclass.ResponseDescription
 import com.example.improvedcrypto.files.presenatation.main.description.repository.DescriptionRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
-class DescriptionCoinViewModel(private val descriptionRepository: DescriptionRepository) :
-    ViewModel() {
+class DescriptionCoinViewModel(
+    private val descriptionRepository: DescriptionRepository
+    ) :ViewModel() {
 
     var liveData: MutableLiveData<ResponseDescription> = MutableLiveData()
 
@@ -36,13 +33,13 @@ class DescriptionCoinViewModel(private val descriptionRepository: DescriptionRep
                         )
                     )
                 }
-            }catch (e: Exception){}
+            } catch (e: Exception) {
+            }
         }
     }
 
-    fun getAllData(database: CoinDatabase?): MutableList<CoinItem> {
-
-       return descriptionRepository.checkCoinsFromDatabase(database!!)
+    fun getAllData(): MutableList<CoinItem> {
+        return descriptionRepository.checkCoinsFromDatabase()
     }
 
     fun processingDatabaseResponse(id: String?, coinList: MutableList<CoinItem>): Boolean {
@@ -52,12 +49,12 @@ class DescriptionCoinViewModel(private val descriptionRepository: DescriptionRep
         return false
     }
 
-    suspend fun sendCoinToDatabase(coinEntity: CoinEntity, database: CoinDatabase?) {
-        descriptionRepository.sendCoinToDatabase(coinEntity, database!!)
+    suspend fun sendCoinToDatabase(coinEntity: CoinEntity) {
+        descriptionRepository.sendCoinToDatabase(coinEntity)
     }
 
-    suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase?) {
-        descriptionRepository.deleteCoin(coinEntity, database!!)
+    suspend fun deleteCoin(coinEntity: CoinEntity) {
+        descriptionRepository.deleteCoin(coinEntity)
     }
 
     override fun onCleared() {

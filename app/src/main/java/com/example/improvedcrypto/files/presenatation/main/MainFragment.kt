@@ -1,11 +1,11 @@
 package com.example.improvedcrypto.files.presenatation.main
 
 import android.os.Bundle
-import android.os.Parcelable
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.databinding.FragmentMainBinding
 import com.example.improvedcrypto.files.data.dataclass.CoinResponse
@@ -16,27 +16,20 @@ import org.koin.android.ext.android.inject
 
 class MainFragment : Fragment() {
 
-    lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentMainBinding
     private val mainViewModel: MainViewModel by inject()
-    var responseBody: MutableList<CoinResponse> = emptyList<CoinResponse>().toMutableList()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private var responseBody: MutableList<CoinResponse> = emptyList<CoinResponse>().toMutableList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        noInternetConnection()
         mainViewModel.getResponse()
-
         adapter()
         binding.swipeRefreshLayout.setOnRefreshListener {
             refreshApp()
@@ -53,25 +46,23 @@ class MainFragment : Fragment() {
 //        var nikita = bundle.getParcelableArrayList<Parcelable>("COIN")
 //        var oleg = arguments?.getParcelableArrayList<Parcelable>("COIN")
 
-        mainViewModel.liveDataBoolean.observe(viewLifecycleOwner, Observer{
-            if(it == true)
+        mainViewModel.liveDataBoolean.observe(viewLifecycleOwner){
+            if(it)
                 noInternetConnection()
-        })
+        }
 
         responseBody.clear()
-        mainViewModel.liveData.observe(viewLifecycleOwner, Observer {
+        mainViewModel.liveData.observe(viewLifecycleOwner){
             binding.pbProgressBar.isVisible = it.isEmpty()
-            val Adapter = MainAdapter(it)
+            val adapter = MainAdapter(it)
             binding.rvCoins.layoutManager =
                 LinearLayoutManager(
                     activity?.applicationContext,
                     LinearLayoutManager.VERTICAL,
                     false
                 )
-            binding.rvCoins.adapter = Adapter
-        })
-
-
+            binding.rvCoins.adapter = adapter
+        }
     }
 
     private fun refreshApp() {
@@ -80,13 +71,10 @@ class MainFragment : Fragment() {
         adapter()
     }
 
-    fun noInternetConnection() {
+    private fun noInternetConnection() {
         val dialogFragment = InternetConnectionDialogFragment()
         dialogFragment.show(childFragmentManager, "Hello")
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

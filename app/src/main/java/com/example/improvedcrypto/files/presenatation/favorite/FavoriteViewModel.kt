@@ -9,8 +9,7 @@ import com.example.improvedcrypto.files.data.toCoinItem
 import com.example.improvedcrypto.files.presenatation.main.dataclass.toCoinEntity
 
 class FavoriteViewModel(
-    private val favoriteRepository: FavoriteRepository,
-    private val database: CoinDatabase?
+    private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
 
     fun processingCoin(coin: CoinItem): CoinEntity {
@@ -18,10 +17,10 @@ class FavoriteViewModel(
     }
 
     fun getAllData(): MutableList<CoinItem> {
-        return favoriteRepository.getAllData(database)
+        return favoriteRepository.getAllData()
     }
 
     suspend fun deleteCoin(coinEntity: CoinEntity) {
-        favoriteRepository.deleteCoin(coinEntity, database)
+        favoriteRepository.deleteCoin(coinEntity)
     }
 }

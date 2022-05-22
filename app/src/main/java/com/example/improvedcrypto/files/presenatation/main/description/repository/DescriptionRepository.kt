@@ -1,41 +1,34 @@
 package com.example.improvedcrypto.files.presenatation.main.description.repository
 
-import com.example.improvedcrypto.files.data.CoinDatabase
+import com.example.improvedcrypto.files.data.CoinDao
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.toCoinItem
 import com.example.improvedcrypto.files.domain.ApiService
-import com.example.improvedcrypto.files.domain.instance.RetrofitInstance
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.example.improvedcrypto.files.presenatation.main.description.dataclass.ResponseDescription
 
-class DescriptionRepository {
+class DescriptionRepository(
+    private val coinDao: CoinDao,
+    private val retrofit: ApiService
+    ) {
 
     suspend fun getCoin(id: String): ResponseDescription? {
-        val retrofit = RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
-        val getDescription = retrofit.getDescription(id)
-        return getDescription.body()
+        return retrofit.getDescription(id).body()
     }
 
-    fun checkCoinsFromDatabase(database: CoinDatabase): MutableList<CoinItem> {
-        var coinList: MutableList<CoinItem> =
-            emptyList<CoinItem>().toMutableList()
-        val coinDao = database.CoinDao()
-        val coinFromDatabase = coinDao.readAllData()
-        coinFromDatabase.forEach {
-            coinList.add(
-                it.toCoinItem()
-            )
+    fun checkCoinsFromDatabase(): MutableList<CoinItem> {
+        val coinList: MutableList<CoinItem> = emptyList<CoinItem>().toMutableList()
+        coinDao.readAllData().forEach {
+            coinList.add(it.toCoinItem())
         }
         return coinList
     }
 
-    suspend fun sendCoinToDatabase(coinEntity: CoinEntity, database: CoinDatabase){
-        val coinDao = database.CoinDao()
+    suspend fun sendCoinToDatabase(coinEntity: CoinEntity) {
         coinDao.addCoin(coinEntity)
     }
 
-    suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase) {
-        val coinDao = database.CoinDao()
+    suspend fun deleteCoin(coinEntity: CoinEntity) {
         coinDao.deleteCoin(coinEntity.name)
     }
 

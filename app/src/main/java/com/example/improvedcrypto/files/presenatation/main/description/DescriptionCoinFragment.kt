@@ -1,30 +1,24 @@
 package com.example.improvedcrypto.files.presenatation.main.description
 
+import android.annotation.SuppressLint
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.bumptech.glide.manager.SupportRequestManagerFragment
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentDescriptionBinding
-import com.example.improvedcrypto.files.data.CoinDatabase
-import com.example.improvedcrypto.files.data.CoinDatabase.Companion.getDatabase
 import com.example.improvedcrypto.files.data.CoinEntity
-import com.example.improvedcrypto.files.presenatation.main.MainFragment
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
-import com.example.improvedcrypto.files.presenatation.main.dialogs.internetconnection.InternetConnectionDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -33,26 +27,28 @@ import org.koin.android.ext.android.inject
 class DescriptionCoinFragment : Fragment() {
 
 
-    lateinit var binding: FragmentDescriptionBinding
-    private val descriotionCoinViewModel: DescriptionCoinViewModel by inject()
+    private lateinit var binding: FragmentDescriptionBinding
+    private val descriptionCoinViewModel: DescriptionCoinViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getString("ID")?.let { descriotionCoinViewModel.getDescriptionResponse(it) }
+        arguments?.getString("ID")?.let { descriptionCoinViewModel.getDescriptionResponse(it) }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDescriptionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
-        descriotionCoinViewModel.liveData.observe(viewLifecycleOwner, Observer {
+        descriptionCoinViewModel.liveData.observe(viewLifecycleOwner){
 
             binding.pbProgressBar.isVisible = it.name.isEmpty()
 
@@ -61,37 +57,37 @@ class DescriptionCoinFragment : Fragment() {
                 .placeholder(R.drawable.ic_no_image)
                 .into(binding.ivAvatar)
 
-            binding.tvName.setText(it.name)
+            binding.tvName.text = it.name
 
-            binding.tvSymbol.setText(it.symbol)
+            binding.tvSymbol.text = it.symbol
 
-            binding.tvChangePrice.setText(it.marketData.changePrice.toString() + " %")
+            binding.tvChangePrice.text = it.marketData.changePrice.toString() + " %"
 
-            var resource: Resources = resources
-            var textRedColor = resource.getColor(R.color.red, null)
-            var textGreenColor = resource.getColor(R.color.green, null)
+            val resource: Resources = resources
+            val textRedColor = resource.getColor(R.color.red, null)
+            val textGreenColor = resource.getColor(R.color.green, null)
             if (it.marketData.changePrice > 0) binding.tvChangePrice.setTextColor(textGreenColor)
             else binding.tvChangePrice.setTextColor(textRedColor)
 
-            binding.tvPrice.setText(it.marketData.currentPrice.usd.toString() + " $")
+            binding.tvPrice.text = it.marketData.currentPrice.usd.toString() + " $"
 
-            val Adapter = DescriptionCoinAdapter(it.description.en)
+            val adapter = DescriptionCoinAdapter(it.description.en)
             binding.rvDescription.layoutManager =
                 LinearLayoutManager(
                     activity?.applicationContext,
                     LinearLayoutManager.VERTICAL,
                     false
                 )
-            binding.rvDescription.adapter = Adapter
+            binding.rvDescription.adapter = adapter
 
-            val temp = arguments?.getString("ID")
+            arguments?.getString("ID")
 
             val coinList: MutableList<CoinItem> = getAllData()
-            var status: Boolean = descriotionCoinViewModel.processingDatabaseResponse(
-               arguments?.getString("ID"),
+            var status: Boolean = descriptionCoinViewModel.processingDatabaseResponse(
+                arguments?.getString("ID"),
                 coinList
             )
-            if (status == true) binding.ibLike.setImageResource(R.drawable.ic_star_rate)
+            if (status) binding.ibLike.setImageResource(R.drawable.ic_star_rate)
             else binding.ibLike.setImageResource(R.drawable.ic_star_outline)
 
             val coin = CoinEntity(
@@ -106,7 +102,7 @@ class DescriptionCoinFragment : Fragment() {
             )
 
             binding.ibLike.setOnClickListener {
-                if (status == true) {
+                if (status) {
                     deleteCoin(coin)
                     binding.ibLike.setImageResource(R.drawable.ic_star_outline)
                     Toast.makeText(
@@ -135,43 +131,29 @@ class DescriptionCoinFragment : Fragment() {
                 Navigation.findNavController(view)
                     .navigate(R.id.mainFragment)
             }
-        })
+        }
     }
 
-    fun getAllData(): MutableList<CoinItem> {
+    private fun getAllData(): MutableList<CoinItem> {
         var coinList: MutableList<CoinItem> = emptyList<CoinItem>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
             runBlocking {
-                val database = activity?.applicationContext?.let { getDatabase(it) }
-                coinList = descriotionCoinViewModel.getAllData(database)
+                coinList = descriptionCoinViewModel.getAllData()
             }
         }
-        Thread.sleep(100)
         return coinList
     }
 
 
-    fun insertToDataBase(coinEntity: CoinEntity) {
+    private fun insertToDataBase(coinEntity: CoinEntity) {
         lifecycleScope.launch(Dispatchers.IO) {
-            val database = activity?.applicationContext?.let { CoinDatabase.getDatabase(it) }
-            descriotionCoinViewModel.sendCoinToDatabase(coinEntity, database)
+            descriptionCoinViewModel.sendCoinToDatabase(coinEntity)
         }
     }
 
-    fun deleteCoin(coinEntity: CoinEntity) {
+    private fun deleteCoin(coinEntity: CoinEntity) {
         lifecycleScope.launch(Dispatchers.IO) {
-            val database = activity?.applicationContext?.let { getDatabase(it) }
-            descriotionCoinViewModel.deleteCoin(coinEntity, database)
+            descriptionCoinViewModel.deleteCoin(coinEntity)
         }
-    }
-
-    private fun noInternetConnection(){
-        val dialogFragment = InternetConnectionDialogFragment()
-        dialogFragment.show(childFragmentManager, "Hello")
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

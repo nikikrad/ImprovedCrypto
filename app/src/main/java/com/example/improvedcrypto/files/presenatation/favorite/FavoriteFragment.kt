@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.databinding.FragmentFavoriteBinding
 import com.example.improvedcrypto.files.data.CoinEntity
-import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
@@ -20,34 +18,27 @@ import org.koin.android.ext.android.inject
 
 class FavoriteFragment : Fragment() {
 
-    lateinit var binding: FragmentFavoriteBinding
+    private lateinit var binding: FragmentFavoriteBinding
     private val favoriteViewModel: FavoriteViewModel by inject()
-    val database: CoinDatabase by inject()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         adapter(binding)
         refreshApp(binding)
     }
 
 
-    fun getAllData(): MutableList<CoinItem> {
+    private fun getAllData(): MutableList<CoinItem> {
         var coinList: MutableList<CoinItem> =
             emptyList<CoinItem>().toMutableList()
         lifecycleScope.launch(Dispatchers.IO) {
-//            database = activity?.applicationContext?.let { getDatabase(it) }
             coinList = favoriteViewModel.getAllData()
         }
         Thread.sleep(100)
@@ -61,7 +52,7 @@ class FavoriteFragment : Fragment() {
         } else {
             binding.tvNoCoin.visibility = View.INVISIBLE
         }
-        val Adapter = activity?.let {
+        val adapter = activity?.let {
             FavoriteAdapter(
                 getAllData(),
                 binding,
@@ -73,7 +64,7 @@ class FavoriteFragment : Fragment() {
         linearLayoutManager.reverseLayout = true
         linearLayoutManager.stackFromEnd = true
         binding.rvCoins.layoutManager = linearLayoutManager
-        binding.rvCoins.adapter = Adapter
+        binding.rvCoins.adapter = adapter
     }
 
     fun showSnackBar(
@@ -88,23 +79,16 @@ class FavoriteFragment : Fragment() {
             Snackbar.LENGTH_LONG
         ).setAction("Delete") {
             val processedCoin = favoriteViewModel.processingCoin(coin)
-            deleteCoin(processedCoin, favoriteViewModel, applicationContext)
+            deleteCoin(processedCoin, favoriteViewModel)
             Toast.makeText(applicationContext, "Removal is Successful", Toast.LENGTH_SHORT).show()
         }.show()
     }
 
-    fun getDatabase(context: Context): CoinDatabase {
-        val database = context.let { CoinDatabase.getDatabase(it) }
-        return database
-    }
-
-    fun deleteCoin(
+    private fun deleteCoin(
         coinEntity: CoinEntity,
         favoriteViewModel: FavoriteViewModel,
-        applicationContext: Context
     ) {
         lifecycleScope.launch(Dispatchers.IO) {
-//            val database = getDatabase(applicationContext)
             favoriteViewModel.deleteCoin(coinEntity)
         }
     }
@@ -114,9 +98,5 @@ class FavoriteFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = false
             adapter(binding)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

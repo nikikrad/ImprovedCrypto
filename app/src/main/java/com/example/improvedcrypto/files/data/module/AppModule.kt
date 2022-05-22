@@ -4,6 +4,9 @@ import android.app.Application
 import androidx.room.Room
 import com.example.improvedcrypto.files.data.CoinDao
 import com.example.improvedcrypto.files.data.CoinDatabase
+import com.example.improvedcrypto.files.data.CoinEntity
+import com.example.improvedcrypto.files.domain.ApiService
+import com.example.improvedcrypto.files.domain.instance.RetrofitInstance
 import com.example.improvedcrypto.files.presenatation.favorite.FavoriteViewModel
 import com.example.improvedcrypto.files.presenatation.favorite.repository.FavoriteRepository
 import com.example.improvedcrypto.files.presenatation.main.MainViewModel
@@ -15,28 +18,29 @@ import com.example.improvedcrypto.files.presenatation.main.repository.MainReposi
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.create
 
 val appModule = module {
 
-    single <MainRepository> { MainRepository() }
+    single { MainRepository(get()) }
 
     viewModel { MainViewModel(get()) }
 
-    single <DescriptionRepository> { DescriptionRepository() }
+    single { DescriptionRepository(get(), get()) }
 
     viewModel { DescriptionCoinViewModel(get()) }
 
     single { FavoriteRepository(get()) }
 
-    viewModel { FavoriteViewModel(get(), get()) }
+    viewModel { FavoriteViewModel(get()) }
 
     single { InternetConnectionRepository() }
 
     viewModel { InternetConnectionDialogViewModel(get()) }
 
-    ///////////////////////////////////////////////
+    single { CoinEntity() }
 
-    fun CoinDatabase(application: Application): CoinDatabase {
+    fun provideCoinDatabase(application: Application): CoinDatabase {
         return Room.databaseBuilder(
             application.applicationContext,
             CoinDatabase::class.java,
@@ -44,26 +48,17 @@ val appModule = module {
         ).build()
     }
 
-    fun CoinDao(coinDatabase: CoinDatabase): CoinDao {
+    fun provideCoinDao(coinDatabase: CoinDatabase): CoinDao {
         return coinDatabase.CoinDao()
     }
 
-    single { CoinDatabase(androidApplication()) }
-    single { CoinDao(get()) }
+    single { provideCoinDatabase(androidApplication()) }
+    single { provideCoinDao(get()) }
+
+    fun provideRetrofit(): ApiService {
+        return RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
+    }
+
+    single { provideRetrofit() }
 
 }
-
-//val Database = module {
-//    fun provideDataBase(application: Application): CoinDatabase {
-//        return Room.databaseBuilder(application, CoinDatabase::class.java, "USERDB")
-//            .fallbackToDestructiveMigration()
-//            .build()
-//    }
-//
-//    fun provideDao(coinDatabase: CoinDatabase): CoinDao {
-//        return coinDatabase.CoinDao()
-//    }
-//    single { provideDataBase(androidApplication()) }
-//    single { provideDao(get()) }
-//
-//}

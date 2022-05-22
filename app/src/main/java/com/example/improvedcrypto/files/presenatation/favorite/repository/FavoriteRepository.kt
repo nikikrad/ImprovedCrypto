@@ -14,16 +14,14 @@ class FavoriteRepository(private val coinDao: CoinDao){
         return coinDao.readAllData()
     }
 
-    suspend fun deleteCoin(coinEntity: CoinEntity, database: CoinDatabase?){
-//        val coinDao = database?.CoinDao()
+    suspend fun deleteCoin(coinEntity: CoinEntity){
         coinDao.deleteCoin(coinEntity.name)
     }
 
-    fun getAllData(database: CoinDatabase?): MutableList<CoinItem> {
+    fun getAllData(): MutableList<CoinItem> {
 
         var coinList: MutableList<CoinItem> =
             emptyList<CoinItem>().toMutableList()
-//        val coinDao = database?.CoinDao()
         val coinFromDatabase = readAllData()
         coinFromDatabase.forEach {
             coinList.add(it.toCoinItem())
