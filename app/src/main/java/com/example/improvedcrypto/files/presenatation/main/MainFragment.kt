@@ -42,10 +42,6 @@ class MainFragment : Fragment() {
 
     private fun adapter() {
 
-//        var bundle = Bundle()
-//        var nikita = bundle.getParcelableArrayList<Parcelable>("COIN")
-//        var oleg = arguments?.getParcelableArrayList<Parcelable>("COIN")
-
         mainViewModel.liveDataBoolean.observe(viewLifecycleOwner){
             if(it)
                 noInternetConnection()
@@ -75,6 +71,4 @@ class MainFragment : Fragment() {
         val dialogFragment = InternetConnectionDialogFragment()
         dialogFragment.show(childFragmentManager, "Hello")
     }
-
-
 }

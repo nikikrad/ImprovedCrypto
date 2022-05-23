@@ -30,6 +30,7 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        favoriteViewModel.getAllData()
         adapter(binding)
         refreshApp(binding)
     }
@@ -38,10 +39,9 @@ class FavoriteFragment : Fragment() {
     private fun getAllData(): MutableList<CoinItem> {
         var coinList: MutableList<CoinItem> =
             emptyList<CoinItem>().toMutableList()
-        lifecycleScope.launch(Dispatchers.IO) {
-            coinList = favoriteViewModel.getAllData()
+        favoriteViewModel.liveData.observe(viewLifecycleOwner) {
+            coinList = it
         }
-        Thread.sleep(100)
         return coinList
     }
 

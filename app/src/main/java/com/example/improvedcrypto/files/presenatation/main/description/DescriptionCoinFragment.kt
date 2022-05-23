@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -21,7 +23,6 @@ import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 
 class DescriptionCoinFragment : Fragment() {
@@ -33,6 +34,7 @@ class DescriptionCoinFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.getString("ID")?.let { descriptionCoinViewModel.getDescriptionResponse(it) }
+        descriptionCoinViewModel.getAllData()
     }
 
     override fun onCreateView(
@@ -48,7 +50,7 @@ class DescriptionCoinFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
-        descriptionCoinViewModel.liveData.observe(viewLifecycleOwner){
+        descriptionCoinViewModel.liveData.observe(viewLifecycleOwner) {
 
             binding.pbProgressBar.isVisible = it.name.isEmpty()
 
@@ -136,11 +138,9 @@ class DescriptionCoinFragment : Fragment() {
 
     private fun getAllData(): MutableList<CoinItem> {
         var coinList: MutableList<CoinItem> = emptyList<CoinItem>().toMutableList()
-        lifecycleScope.launch(Dispatchers.IO) {
-            runBlocking {
-                coinList = descriptionCoinViewModel.getAllData()
+            descriptionCoinViewModel.liveDataBoolean.observe(viewLifecycleOwner){
+                coinList = it
             }
-        }
         return coinList
     }
 
