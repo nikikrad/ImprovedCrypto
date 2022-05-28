@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.example.improvedcrypto.files.presenatation.main.description.dataclass.ResponseDescription
+import com.example.improvedcrypto.files.presenatation.main.description.dataclass.toResponseDescriprion
 import com.example.improvedcrypto.files.presenatation.main.description.repository.DescriptionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,26 +15,16 @@ class DescriptionCoinViewModel(
     private val descriptionRepository: DescriptionRepository
     ) :ViewModel() {
 
-    var liveData: MutableLiveData<ResponseDescription> = MutableLiveData()
-    var liveDataBoolean: MutableLiveData<MutableList<CoinItem>> = MutableLiveData()
+    var responseCoin: MutableLiveData<ResponseDescription> = MutableLiveData()
+    var listCoinItem: MutableLiveData<MutableList<CoinItem>> = MutableLiveData()
 
     fun getDescriptionResponse(id: String) {
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val bodyDescription = descriptionRepository.getCoin(id)
-
                 if (bodyDescription != null) {
-                    liveData.postValue(
-                        ResponseDescription(
-                            bodyDescription.id,
-                            bodyDescription.symbol,
-                            bodyDescription.name,
-                            bodyDescription.image,
-                            bodyDescription.description,
-                            bodyDescription.marketData
-                        )
-                    )
+                    responseCoin.postValue(bodyDescription.toResponseDescriprion())
                 }
             } catch (e: Exception) {
             }
@@ -42,7 +33,7 @@ class DescriptionCoinViewModel(
 
     fun getAllData(){
         viewModelScope.launch(Dispatchers.IO) {
-            liveDataBoolean.postValue(descriptionRepository.checkCoinsFromDatabase() as MutableList<CoinItem>?)
+            listCoinItem.postValue(descriptionRepository.checkCoinsFromDatabase() as MutableList<CoinItem>?)
         }
     }
 
@@ -59,9 +50,5 @@ class DescriptionCoinViewModel(
 
     suspend fun deleteCoin(coinEntity: CoinEntity) {
         descriptionRepository.deleteCoin(coinEntity)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
     }
 }

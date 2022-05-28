@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.databinding.FragmentMainBinding
 import com.example.improvedcrypto.files.data.dataclass.CoinResponse
 import com.example.improvedcrypto.files.presenatation.main.dialogs.filter.CustomDialogFragment
-import com.example.improvedcrypto.files.presenatation.main.dialogs.internetconnection.InternetConnectionDialogFragment
+import com.example.improvedcrypto.files.presenatation.main.dialogs.internet_connection.InternetConnectionDialogFragment
 import org.koin.android.ext.android.inject
 
 
@@ -64,7 +64,6 @@ class MainFragment : Fragment() {
     private fun refreshApp() {
         mainViewModel.getResponse()
         binding.swipeRefreshLayout.isRefreshing = false
-        adapter()
     }
 
     private fun noInternetConnection() {

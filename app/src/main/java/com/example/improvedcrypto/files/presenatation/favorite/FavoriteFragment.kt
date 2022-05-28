@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.databinding.FragmentFavoriteBinding
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
+import com.example.improvedcrypto.files.presenatation.main.dataclass.toCoinEntity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,15 +40,15 @@ class FavoriteFragment : Fragment() {
     private fun getAllData(): MutableList<CoinItem> {
         var coinList: MutableList<CoinItem> =
             emptyList<CoinItem>().toMutableList()
-        favoriteViewModel.liveData.observe(viewLifecycleOwner) {
+        favoriteViewModel.listCoinItem.observe(viewLifecycleOwner) {
             coinList = it
         }
         return coinList
     }
 
     private fun adapter(binding: FragmentFavoriteBinding) {
-        val isEmpty = getAllData()
-        if (isEmpty.size == 0) {
+        val coins = getAllData()
+        if (coins.size == 0) {
             binding.tvNoCoin.visibility = View.VISIBLE
         } else {
             binding.tvNoCoin.visibility = View.INVISIBLE
@@ -56,7 +57,6 @@ class FavoriteFragment : Fragment() {
             FavoriteAdapter(
                 getAllData(),
                 binding,
-                favoriteViewModel,
                 it.applicationContext
             )
         }
@@ -70,7 +70,6 @@ class FavoriteFragment : Fragment() {
     fun showSnackBar(
         binding: FragmentFavoriteBinding,
         coin: CoinItem,
-        favoriteViewModel: FavoriteViewModel,
         applicationContext: Context
     ) {
         Snackbar.make(
@@ -78,16 +77,12 @@ class FavoriteFragment : Fragment() {
             "Do you want to delete " + coin.name + " coin?",
             Snackbar.LENGTH_LONG
         ).setAction("Delete") {
-            val processedCoin = favoriteViewModel.processingCoin(coin)
-            deleteCoin(processedCoin, favoriteViewModel)
+            deleteCoin(coin.toCoinEntity())
             Toast.makeText(applicationContext, "Removal is Successful", Toast.LENGTH_SHORT).show()
         }.show()
     }
 
-    private fun deleteCoin(
-        coinEntity: CoinEntity,
-        favoriteViewModel: FavoriteViewModel,
-    ) {
+    private fun deleteCoin(coinEntity: CoinEntity) {
         lifecycleScope.launch(Dispatchers.IO) {
             favoriteViewModel.deleteCoin(coinEntity)
         }

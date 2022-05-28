@@ -1,5 +1,6 @@
 package com.example.improvedcrypto.files.presenatation.main.description.dataclass
 
+import com.example.improvedcrypto.files.data.CoinEntity
 import com.google.gson.annotations.SerializedName
 
 data class ResponseDescription(
@@ -30,5 +31,29 @@ data class CurrentPrice(
 data class Image(
     var large: String
 )
+
+fun ResponseDescription.toCoinEntity(): CoinEntity{
+    return CoinEntity(
+        id = 0,
+        nameId = id,
+        symbol = symbol,
+        name = name,
+        image = image.large,
+        description = description.en,
+        currentPrice = marketData.currentPrice.usd,
+        changePrice = marketData.changePrice
+    )
+}
+
+fun ResponseDescription.toResponseDescriprion():ResponseDescription{
+    return ResponseDescription(
+        id = id,
+        symbol = symbol,
+        name = name,
+        image = image,
+        description = description,
+        marketData = marketData
+    )
+}
 
 

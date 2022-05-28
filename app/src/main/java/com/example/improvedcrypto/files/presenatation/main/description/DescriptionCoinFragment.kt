@@ -21,6 +21,7 @@ import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentDescriptionBinding
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
+import com.example.improvedcrypto.files.presenatation.main.description.dataclass.toCoinEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -50,7 +51,7 @@ class DescriptionCoinFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
-        descriptionCoinViewModel.liveData.observe(viewLifecycleOwner) {
+        descriptionCoinViewModel.responseCoin.observe(viewLifecycleOwner) {
 
             binding.pbProgressBar.isVisible = it.name.isEmpty()
 
@@ -92,16 +93,7 @@ class DescriptionCoinFragment : Fragment() {
             if (status) binding.ibLike.setImageResource(R.drawable.ic_star_rate)
             else binding.ibLike.setImageResource(R.drawable.ic_star_outline)
 
-            val coin = CoinEntity(
-                0,
-                it.id,
-                it.symbol,
-                it.name,
-                it.image.large,
-                it.description.en,
-                it.marketData.currentPrice.usd,
-                it.marketData.changePrice
-            )
+            val coin = it.toCoinEntity()
 
             binding.ibLike.setOnClickListener {
                 if (status) {
@@ -138,7 +130,7 @@ class DescriptionCoinFragment : Fragment() {
 
     private fun getAllData(): MutableList<CoinItem> {
         var coinList: MutableList<CoinItem> = emptyList<CoinItem>().toMutableList()
-            descriptionCoinViewModel.liveDataBoolean.observe(viewLifecycleOwner){
+            descriptionCoinViewModel.listCoinItem.observe(viewLifecycleOwner){
                 coinList = it
             }
         return coinList
