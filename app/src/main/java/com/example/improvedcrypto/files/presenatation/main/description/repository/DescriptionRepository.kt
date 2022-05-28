@@ -16,12 +16,8 @@ class DescriptionRepository(
         return retrofit.getDescription(id).body()
     }
 
-    fun checkCoinsFromDatabase(): MutableList<CoinItem> {
-        val coinList: MutableList<CoinItem> = emptyList<CoinItem>().toMutableList()
-        coinDao.readAllData().forEach {
-            coinList.add(it.toCoinItem())
-        }
-        return coinList
+    fun checkCoinsFromDatabase(): List<CoinItem> {
+        return coinDao.readAllData().map { it.toCoinItem() }
     }
 
     suspend fun sendCoinToDatabase(coinEntity: CoinEntity) {

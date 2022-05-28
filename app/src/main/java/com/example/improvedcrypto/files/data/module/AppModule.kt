@@ -1,7 +1,5 @@
 package com.example.improvedcrypto.files.data.module
 
-import android.app.Application
-import androidx.room.Room
 import com.example.improvedcrypto.files.data.CoinDao
 import com.example.improvedcrypto.files.data.CoinDatabase
 import com.example.improvedcrypto.files.data.CoinEntity
@@ -18,7 +16,6 @@ import com.example.improvedcrypto.files.presenatation.main.repository.MainReposi
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import retrofit2.create
 
 val appModule = module {
 
@@ -37,28 +34,26 @@ val appModule = module {
     single { InternetConnectionRepository() }
 
     viewModel { InternetConnectionDialogViewModel(get()) }
+}
 
-    single { CoinEntity() }
-
-    fun provideCoinDatabase(application: Application): CoinDatabase {
-        return Room.databaseBuilder(
-            application.applicationContext,
-            CoinDatabase::class.java,
-            "coin_database"
-        ).build()
-    }
-
-    fun provideCoinDao(coinDatabase: CoinDatabase): CoinDao {
-        return coinDatabase.CoinDao()
-    }
-
-    single { provideCoinDatabase(androidApplication()) }
-    single { provideCoinDao(get()) }
+val retrofitModule = module{
 
     fun provideRetrofit(): ApiService {
         return RetrofitInstance.getRetrofitInstance().create(ApiService::class.java)
     }
 
     single { provideRetrofit() }
+}
 
+val roomModule = module{
+
+    single { CoinEntity() }
+
+    fun provideCoinDao(coinDatabase: CoinDatabase): CoinDao {
+        return coinDatabase.CoinDao()
+    }
+
+    single { provideCoinDao(get()) }
+
+    single { CoinDatabase.getDatabase(androidApplication()) }
 }

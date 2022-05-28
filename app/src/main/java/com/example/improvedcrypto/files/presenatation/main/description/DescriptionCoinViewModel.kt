@@ -42,7 +42,7 @@ class DescriptionCoinViewModel(
 
     fun getAllData(){
         viewModelScope.launch(Dispatchers.IO) {
-            liveDataBoolean.postValue(descriptionRepository.checkCoinsFromDatabase())
+            liveDataBoolean.postValue(descriptionRepository.checkCoinsFromDatabase() as MutableList<CoinItem>?)
         }
     }
 

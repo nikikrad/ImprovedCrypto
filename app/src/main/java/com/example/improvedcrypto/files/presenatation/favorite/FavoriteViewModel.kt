@@ -25,7 +25,7 @@ class FavoriteViewModel(
 
     fun getAllData() {
         viewModelScope.launch(Dispatchers.IO) {
-            liveData.postValue(favoriteRepository.getAllData())
+            liveData.postValue(favoriteRepository.getAllData() as MutableList<CoinItem>?)
         }
     }
 

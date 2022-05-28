@@ -11,19 +11,12 @@ import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 class CoinEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    @ColumnInfo
     var nameId: String = "",
-    @ColumnInfo
     var symbol: String = "",
-    @ColumnInfo
     var name: String = "",
-    @ColumnInfo
     var image: String = "",
-    @ColumnInfo
     var description: String = "",
-    @ColumnInfo
     var currentPrice: Float = 0f,
-    @ColumnInfo
     var changePrice: Float = 0f
 )
 

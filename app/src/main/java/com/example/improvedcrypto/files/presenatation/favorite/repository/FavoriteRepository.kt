@@ -8,24 +8,11 @@ import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 
 class FavoriteRepository(private val coinDao: CoinDao){
 
-
-
-    fun readAllData(): List<CoinEntity>{
-        return coinDao.readAllData()
-    }
-
     suspend fun deleteCoin(coinEntity: CoinEntity){
         coinDao.deleteCoin(coinEntity.name)
     }
 
-    fun getAllData(): MutableList<CoinItem> {
-
-        var coinList: MutableList<CoinItem> =
-            emptyList<CoinItem>().toMutableList()
-        val coinFromDatabase = readAllData()
-        coinFromDatabase.forEach {
-            coinList.add(it.toCoinItem())
-        }
-        return coinList
+    fun getAllData(): List<CoinItem> {
+        return coinDao.readAllData().map { it.toCoinItem() }
     }
 }
