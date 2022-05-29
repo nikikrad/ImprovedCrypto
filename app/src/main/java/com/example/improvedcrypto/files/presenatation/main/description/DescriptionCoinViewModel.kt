@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
-import com.example.improvedcrypto.files.presenatation.main.description.dataclass.ResponseDescription
-import com.example.improvedcrypto.files.presenatation.main.description.dataclass.toResponseDescriprion
+import com.example.improvedcrypto.files.data.dataclass.ResponseDescription
+import com.example.improvedcrypto.files.data.dataclass.toResponseDescription
 import com.example.improvedcrypto.files.presenatation.main.description.repository.DescriptionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +24,7 @@ class DescriptionCoinViewModel(
             try {
                 val bodyDescription = descriptionRepository.getCoin(id)
                 if (bodyDescription != null) {
-                    responseCoin.postValue(bodyDescription.toResponseDescriprion())
+                    responseCoin.postValue(bodyDescription.toResponseDescription())
                 }
             } catch (e: Exception) {
             }

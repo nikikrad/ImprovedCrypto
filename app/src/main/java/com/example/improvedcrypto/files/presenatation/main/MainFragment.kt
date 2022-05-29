@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.databinding.FragmentMainBinding
 import com.example.improvedcrypto.files.data.dataclass.CoinResponse
-import com.example.improvedcrypto.files.presenatation.main.dialogs.filter.CustomDialogFragment
 import com.example.improvedcrypto.files.presenatation.main.dialogs.internet_connection.InternetConnectionDialogFragment
 import org.koin.android.ext.android.inject
 
@@ -30,25 +29,13 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mainViewModel.getResponse()
-        adapter()
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            refreshApp()
-        }
-        binding.ibSort.setOnClickListener {
-            val dialog = CustomDialogFragment()
-            dialog.show(childFragmentManager, "qwe")
-        }
-    }
-
-    private fun adapter() {
-
-        mainViewModel.liveDataBoolean.observe(viewLifecycleOwner){
-            if(it)
+        mainViewModel.liveDataBoolean.observe(viewLifecycleOwner) {
+            if (it)
                 noInternetConnection()
         }
 
         responseBody.clear()
-        mainViewModel.liveData.observe(viewLifecycleOwner){
+        mainViewModel.liveData.observe(viewLifecycleOwner) {
             binding.pbProgressBar.isVisible = it.isEmpty()
             val adapter = MainAdapter(it)
             binding.rvCoins.layoutManager =
@@ -58,6 +45,9 @@ class MainFragment : Fragment() {
                     false
                 )
             binding.rvCoins.adapter = adapter
+        }
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            refreshApp()
         }
     }
 

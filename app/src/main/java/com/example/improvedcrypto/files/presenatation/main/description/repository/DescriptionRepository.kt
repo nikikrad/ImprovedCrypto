@@ -5,7 +5,7 @@ import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.data.toCoinItem
 import com.example.improvedcrypto.files.domain.ApiService
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
-import com.example.improvedcrypto.files.presenatation.main.description.dataclass.ResponseDescription
+import com.example.improvedcrypto.files.data.dataclass.ResponseDescription
 
 class DescriptionRepository(
     private val coinDao: CoinDao,

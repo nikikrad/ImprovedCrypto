@@ -1,4 +1,4 @@
-package com.example.improvedcrypto.files.presenatation.main.description.dataclass
+package com.example.improvedcrypto.files.data.dataclass
 
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.google.gson.annotations.SerializedName
@@ -45,7 +45,7 @@ fun ResponseDescription.toCoinEntity(): CoinEntity{
     )
 }
 
-fun ResponseDescription.toResponseDescriprion():ResponseDescription{
+fun ResponseDescription.toResponseDescription(): ResponseDescription {
     return ResponseDescription(
         id = id,
         symbol = symbol,

@@ -21,7 +21,7 @@ import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentDescriptionBinding
 import com.example.improvedcrypto.files.data.CoinEntity
 import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
-import com.example.improvedcrypto.files.presenatation.main.description.dataclass.toCoinEntity
+import com.example.improvedcrypto.files.data.dataclass.toCoinEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject

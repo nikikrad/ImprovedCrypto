@@ -31,40 +31,31 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         favoriteViewModel.getAllData()
-        adapter(binding)
-        refreshApp(binding)
-    }
 
-
-    private fun getAllData(): MutableList<CoinItem> {
-        var coinList: MutableList<CoinItem> =
-            emptyList<CoinItem>().toMutableList()
         favoriteViewModel.listCoinItem.observe(viewLifecycleOwner) {
-            coinList = it
+            val coins = it
+            if (coins.size == 0) {
+                binding.tvNoCoin.visibility = View.VISIBLE
+            } else {
+                binding.tvNoCoin.visibility = View.INVISIBLE
+            }
+            val adapter = activity?.let {
+                FavoriteAdapter(
+                    coins,
+                    binding,
+                    it.applicationContext
+                )
+            }
+            val linearLayoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+            linearLayoutManager.reverseLayout = true
+            linearLayoutManager.stackFromEnd = true
+            binding.rvCoins.layoutManager = linearLayoutManager
+            binding.rvCoins.adapter = adapter
         }
-        return coinList
-    }
-
-    private fun adapter(binding: FragmentFavoriteBinding) {
-        val coins = getAllData()
-        if (coins.size == 0) {
-            binding.tvNoCoin.visibility = View.VISIBLE
-        } else {
-            binding.tvNoCoin.visibility = View.INVISIBLE
-        }
-        val adapter = activity?.let {
-            FavoriteAdapter(
-                getAllData(),
-                binding,
-                it.applicationContext
-            )
-        }
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
-        linearLayoutManager.reverseLayout = true
-        linearLayoutManager.stackFromEnd = true
-        binding.rvCoins.layoutManager = linearLayoutManager
-        binding.rvCoins.adapter = adapter
+        refreshApp(binding)
     }
 
     fun showSnackBar(
@@ -90,8 +81,8 @@ class FavoriteFragment : Fragment() {
 
     private fun refreshApp(binding: FragmentFavoriteBinding) {
         binding.swipeRefreshLayout.setOnRefreshListener {
+            favoriteViewModel.getAllData()
             binding.swipeRefreshLayout.isRefreshing = false
-            adapter(binding)
         }
     }
 }
