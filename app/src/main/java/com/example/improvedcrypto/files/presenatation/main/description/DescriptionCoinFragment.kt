@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
@@ -122,8 +123,8 @@ class DescriptionCoinFragment : Fragment() {
                 AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.click_alpha)
             binding.btnBack.setOnClickListener {
                 binding.btnBack.startAnimation(clickAnimation)
-                Navigation.findNavController(view)
-                    .navigate(R.id.mainFragment)
+                findNavController(view)
+                    .navigate(R.id.nav_graph2)
             }
         }
     }

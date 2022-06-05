@@ -28,6 +28,7 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         mainViewModel.getResponse()
         mainViewModel.liveDataBoolean.observe(viewLifecycleOwner) {
             if (it)

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.improvedcrypto.databinding.FragmentFavoriteBinding
@@ -69,6 +70,7 @@ class FavoriteFragment : Fragment() {
             Snackbar.LENGTH_LONG
         ).setAction("Delete") {
             deleteCoin(coin.toCoinEntity())
+            binding.swipeRefreshLayout.isRefreshing
             Toast.makeText(applicationContext, "Removal is Successful", Toast.LENGTH_SHORT).show()
         }.show()
     }
