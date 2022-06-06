@@ -55,7 +55,6 @@ class MainAdapter(
             itemView.setOnClickListener {
                 bundle.putString("ID", item.id)
                 findNavController(itemView).navigate(R.id.action_mainFragment_to_descriptionCoinFragment, bundle)
-
             }
         }
     }

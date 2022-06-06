@@ -1,14 +1,24 @@
 package com.example.improvedcrypto.files.presenatation
 
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navArgument
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.manager.ConnectivityMonitor
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.ActivityMainBinding
 import com.example.improvedcrypto.files.data.dataclass.CoinResponse
@@ -41,4 +51,12 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView = binding.bottomNavigationView
         bottomNavigationView.setupWithNavController(navController)
     }
+
+//    @RequiresApi(Build.VERSION_CODES.M)
+//    private fun isNetworkAvailable():Boolean{
+//        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+//        val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
+//
+//        return (capabilities != null && capabilities.hasCapability(NET_CAPABILITY_INTERNET))
+//    }
 }

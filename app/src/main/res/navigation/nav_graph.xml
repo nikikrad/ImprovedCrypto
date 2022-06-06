@@ -10,34 +10,25 @@
         android:name="com.example.improvedcrypto.files.presenatation.favorite.FavoriteFragment"
         android:label="Favorite Coins"
         tools:layout="@layout/fragment_favorite"/>
-
     <navigation android:id="@+id/nav_graph2"
         app:startDestination="@id/mainFragment">
         <fragment
             android:id="@+id/mainFragment"
             android:name="com.example.improvedcrypto.files.presenatation.main.MainFragment"
-            android:label="Cryptocurrencies"
-            tools:layout="@layout/fragment_main">
+            android:label="MainFragment"
+            tools:layout="@+id/mainFragment">
             <action
                 android:id="@+id/action_mainFragment_to_descriptionCoinFragment"
-                app:destination="@id/descriptionCoinFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                app:destination="@id/descriptionCoinFragment" />
         </fragment>
         <fragment
             android:id="@+id/descriptionCoinFragment"
             android:name="com.example.improvedcrypto.files.presenatation.main.description.DescriptionCoinFragment"
             android:label="DescriptionCoinFragment"
-            tools:layout="@layout/fragment_description">
+            tools:layout="@+id/descriptionCoinFragment">
             <action
-                android:id="@+id/action_descriptionCoinFragment_to_mainFragment2"
+                android:id="@+id/action_descriptionCoinFragment_to_mainFragment"
                 app:destination="@id/mainFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"
                 app:popUpTo="@id/mainFragment"
                 app:popUpToInclusive="true" />
         </fragment>

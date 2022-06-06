@@ -51,7 +51,6 @@ class DescriptionCoinFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-
         descriptionCoinViewModel.responseCoin.observe(viewLifecycleOwner) {
 
             binding.pbProgressBar.isVisible = it.name.isEmpty()
@@ -123,8 +122,7 @@ class DescriptionCoinFragment : Fragment() {
                 AnimationUtils.loadAnimation(activity?.applicationContext, R.anim.click_alpha)
             binding.btnBack.setOnClickListener {
                 binding.btnBack.startAnimation(clickAnimation)
-                findNavController(view)
-                    .navigate(R.id.nav_graph2)
+                findNavController(view).popBackStack()
             }
         }
     }
