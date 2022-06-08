@@ -58,7 +58,7 @@ class MainFragment : Fragment() {
     }
 
     private fun noInternetConnection() {
-        val dialogFragment = InternetConnectionDialogFragment()
-        dialogFragment.show(childFragmentManager, "Hello")
+//        val dialogFragment = InternetConnectionDialogFragment()
+//        dialogFragment.show(childFragmentManager, "Hello")
     }
 }
