@@ -10,8 +10,6 @@ import com.example.improvedcrypto.files.presenatation.favorite.repository.Favori
 import com.example.improvedcrypto.files.presenatation.main.MainViewModel
 import com.example.improvedcrypto.files.presenatation.main.description.DescriptionCoinViewModel
 import com.example.improvedcrypto.files.presenatation.main.description.repository.DescriptionRepository
-import com.example.improvedcrypto.files.presenatation.main.dialogs.internet_connection.InternetConnectionDialogViewModel
-import com.example.improvedcrypto.files.presenatation.main.dialogs.internet_connection.repository.InternetConnectionRepository
 import com.example.improvedcrypto.files.presenatation.main.repository.MainRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -30,10 +28,6 @@ val appModule = module {
     single { FavoriteRepository(get()) }
 
     viewModel { FavoriteViewModel(get()) }
-
-    single { InternetConnectionRepository() }
-
-    viewModel { InternetConnectionDialogViewModel(get()) }
 }
 
 val retrofitModule = module{

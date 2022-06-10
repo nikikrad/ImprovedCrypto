@@ -14,15 +14,14 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.improvedcrypto.R
 import com.example.improvedcrypto.databinding.FragmentDescriptionBinding
 import com.example.improvedcrypto.files.data.CoinEntity
-import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import com.example.improvedcrypto.files.data.dataclass.toCoinEntity
+import com.example.improvedcrypto.files.presenatation.main.dataclass.CoinItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject

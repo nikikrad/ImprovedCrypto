@@ -30,10 +30,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         mainViewModel.getResponse()
-        mainViewModel.liveDataBoolean.observe(viewLifecycleOwner) {
-            if (it)
-                noInternetConnection()
-        }
 
         responseBody.clear()
         mainViewModel.liveData.observe(viewLifecycleOwner) {
@@ -55,10 +51,5 @@ class MainFragment : Fragment() {
     private fun refreshApp() {
         mainViewModel.getResponse()
         binding.swipeRefreshLayout.isRefreshing = false
-    }
-
-    private fun noInternetConnection() {
-//        val dialogFragment = InternetConnectionDialogFragment()
-//        dialogFragment.show(childFragmentManager, "Hello")
     }
 }

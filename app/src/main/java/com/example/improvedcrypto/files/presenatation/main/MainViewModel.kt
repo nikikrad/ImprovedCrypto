@@ -1,5 +1,6 @@
 package com.example.improvedcrypto.files.presenatation.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,15 +11,13 @@ import kotlinx.coroutines.launch
 class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     val liveData: MutableLiveData<List<CoinResponse>> = MutableLiveData()
-    val liveDataBoolean: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getResponse() {
         viewModelScope.launch {
-            try {
+            try{
                 liveData.postValue(mainRepository.getCoin())
-                liveDataBoolean.postValue(false)
-            }catch (e: Exception){
-                liveDataBoolean.postValue(true)
+            }catch (e:Exception){
+                Log.e("Error: ", e.toString())
             }
         }
     }

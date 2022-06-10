@@ -15,8 +15,9 @@ import com.example.improvedcrypto.files.presenatation.main.dialogs.internet_conn
 
 class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener {
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private val dialogFragment = InternetConnectionDialogFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +36,6 @@ class MainActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityRecei
     }
 
     private fun showDialog(isConnected: Boolean) {
-
-        val dialogFragment = InternetConnectionDialogFragment()
 
         if (!isConnected) {
             dialogFragment.show(supportFragmentManager, "Hello")
