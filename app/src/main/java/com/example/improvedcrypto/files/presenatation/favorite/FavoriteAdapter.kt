@@ -58,9 +58,8 @@ class FavoriteAdapter(
                 .into(avatar)
 
             itemView.setOnClickListener {
-                val delete = FavoriteFragment()
-                delete.showSnackBar(binding, item, applicationContext)
-
+                val favoriteFragment = FavoriteFragment()
+                favoriteFragment.showSnackBar(binding, item, applicationContext)
             }
         }
     }
